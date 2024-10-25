@@ -1,15 +1,26 @@
+//Cuida da camada de classe
 package petmania.petmania.animal;
+
+//responsáveis por trabalhar em conjunto com o MySQL
+/* import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id; */
 
 //responsáveis por criar getters, setters e um construtor
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Getter
 @Setter
 @ToString
+/* @Entity */
 public class Animal {
     //Atributos
+    /* @Id // indica que este atributo é uma PK
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // número sequancial 1, 2, 3... */
     private Long id;    //primary key
     private String nome;
     private int idade;
