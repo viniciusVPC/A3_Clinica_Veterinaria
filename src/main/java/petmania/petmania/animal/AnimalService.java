@@ -2,9 +2,12 @@
 package petmania.petmania.animal;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class AnimalService {
@@ -40,5 +43,21 @@ public class AnimalService {
             throw new IllegalStateException("Animal com id " + idAnimal + " não existe");
         }
         animalRepository.deleteById(idAnimal);
+    }
+
+    // regra de negócio relacionada à edição de um animal já existente.
+    // verifica se existe animal com esse id. Caso não, joga um erro
+    // se existe, atualiza as informações do animal na TABLE
+    // o @Transactional torna desnecessário o uso de Querys
+    @Transactional
+    public void updateAnimal(Long idAnimal, String nome, String raca) {
+        Animal animal = animalRepository.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
+        if (nome != null && nome.length() > 0 && !Objects.equals(animal.getNome(), nome)) {
+            animal.setNome(nome);
+        }
+        if (raca != null && raca.length() > 0 && !Objects.equals(animal.getRaca(), raca)) {
+            animal.setRaca(raca);
+        }
     }
 }

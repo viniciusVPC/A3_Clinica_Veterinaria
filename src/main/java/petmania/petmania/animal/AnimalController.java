@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping(path = "api/v1/animal")
@@ -36,9 +38,17 @@ public class AnimalController {
         animalService.addNewAnimal(animal);
     }
 
+    // função DELETE da api
     @DeleteMapping(path = "{idAnimal}")
     public void deleteAnimal(@PathVariable("idAnimal") Long idAnimal) {
         // TODO verificar id not null
         animalService.deleteAnimal(idAnimal);
+    }
+
+    @PutMapping(path = "{idAnimal}")
+    public void updateAnimal(@PathVariable("idAnimal") Long idAnimal,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String raca) {
+        animalService.updateAnimal(idAnimal, nome, raca);
     }
 }
