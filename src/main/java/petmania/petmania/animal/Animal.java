@@ -26,6 +26,8 @@ public class Animal {
     private Long id; // primary key
     private String nome;
     private LocalDate dataNasc;
+    // atributo idade não aparece na TABLE, é calculada automaticamente e exibida no
+    // GET da api
     @Transient
     private int idade;
     private String especie;
