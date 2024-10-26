@@ -29,7 +29,7 @@ public class AnimalService {
         Optional<Animal> animalDataOptional = animalRepository.findAnimalByDataNasc(animal.getDataNasc());
         Optional<Animal> animalNomeOptional = animalRepository.findAnimalByNome(animal.getNome());
         if (animalDataOptional.isPresent() && animalNomeOptional.isPresent()) {
-            throw new IllegalStateException("já existe esse nome com essa data de nascimento");
+            throw new IllegalStateException("já existe um animal com esse nome com essa data de nascimento");
         }
         animalRepository.save(animal);
     }

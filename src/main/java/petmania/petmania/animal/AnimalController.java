@@ -45,6 +45,7 @@ public class AnimalController {
         animalService.deleteAnimal(idAnimal);
     }
 
+    // função PUT da api
     @PutMapping(path = "{idAnimal}")
     public void updateAnimal(@PathVariable("idAnimal") Long idAnimal,
             @RequestParam(required = false) String nome,
