@@ -7,14 +7,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AnimalService {
+    private final AnimalRepository animalRepository;
+
+    public AnimalService(AnimalRepository animalRepository) {
+        this.animalRepository = animalRepository;
+    }
+
     public List<Animal> getAnimais() {
-        return List.of(
-                new Animal(
-                        1L,
-                        "Baumi",
-                        6,
-                        "gato",
-                        "vira-lata",
-                        1L));
+        return animalRepository.findAll();
+        /*
+         * return List.of(
+         * new Animal(
+         * 1L,
+         * "Baumi",
+         * 6,
+         * "gato",
+         * "vira-lata",
+         * 1L));
+         */
     }
 }
