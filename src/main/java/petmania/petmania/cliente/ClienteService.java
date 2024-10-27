@@ -3,18 +3,22 @@ package petmania.petmania.cliente;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import petmania.petmania.animal.Animal;
 import petmania.petmania.animal.AnimalRepository;
 
 @Service
 public class ClienteService {
     private ClienteRepository clienteRepository;
+    private AnimalRepository animalRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, AnimalRepository animalRepository) {
         this.clienteRepository = clienteRepository;
+        this.animalRepository = animalRepository;
     }
 
     public List<Cliente> getClientes() {
@@ -26,7 +30,7 @@ public class ClienteService {
     // repetido"
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewCliente(Cliente cliente) {
-        Optional<Cliente> clienteOptional = clienteRepository.findClienteByCPF(cliente.getCPF());
+        Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
         if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
         }
@@ -50,19 +54,19 @@ public class ClienteService {
     // se existe, atualiza as informações do cliente na TABLE
     // o @Transactional torna desnecessário o uso de Querys
     @Transactional
-    public void updateCliente(Long idCliente, String nome, String CPF, String email) {
+    public void updateCliente(Long idCliente, String nome, String cpf, String email) {
         Cliente cliente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não existe"));
         if (nome != null && nome.length() > 0 && !Objects.equals(cliente.getNome(), nome)) {
             cliente.setNome(nome);
         }
-        if (CPF != null && CPF.length() > 0 && !Objects.equals(cliente.getCPF(), CPF)) {
-            System.out.println(CPF);
-            Optional<Cliente> clienteOptional = clienteRepository.findClienteByCPF(CPF);
+        if (cpf != null && cpf.length() > 0 && !Objects.equals(cliente.getCpf(), cpf)) {
+            System.out.println(cpf);
+            Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cpf);
             if (clienteOptional.isPresent()) {
                 throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
             }
-            cliente.setCPF(CPF);
+            cliente.setCpf(cpf);
         }
         if (email != null && email.length() > 0 && !Objects.equals(cliente.getEmail(), email)) {
             Optional<Cliente> clienteOptional = clienteRepository.findClienteByEmail(email);
@@ -71,6 +75,18 @@ public class ClienteService {
             }
             cliente.setEmail(email);
         }
+    }
+
+    @Transactional
+    public void conectaAnimalaCliente(Long idCliente, Long idAnimal) {
+        Set<Animal> pets = null;
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não existe"));
+        Animal animal = animalRepository.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
+        pets = cliente.getPets();
+        pets.add(animal);
+        cliente.setPets(pets);
     }
 
 }

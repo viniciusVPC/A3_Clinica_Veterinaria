@@ -5,15 +5,27 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import petmania.petmania.animal.Animal;
+import petmania.petmania.animal.AnimalRepository;
+import petmania.petmania.cliente.Cliente;
+import petmania.petmania.cliente.ClienteRepository;
 
 @Service
 public class ConsultaService {
     private ConsultaRepository consultaRepository;
+    private ClienteRepository clienteRepository;
+    private AnimalRepository animalRepository;
 
-    public ConsultaService(ConsultaRepository consultaRepository) {
+    public ConsultaService(ConsultaRepository consultaRepository, ClienteRepository clienteRepository,
+            AnimalRepository animalRepository) {
         this.consultaRepository = consultaRepository;
+        this.clienteRepository = clienteRepository;
+        this.animalRepository = animalRepository;
     }
 
     public List<Consulta> getConsultas() {
@@ -41,6 +53,7 @@ public class ConsultaService {
         consultaRepository.deleteById(idConsulta);
     }
 
+    @Transactional
     public void updateConsulta(Long idConsulta, String tipo, LocalDateTime horario) {
         Consulta consulta = consultaRepository.findById(idConsulta)
                 .orElseThrow(() -> new IllegalStateException("Consulta com id " + idConsulta + " não existe."));
@@ -54,6 +67,31 @@ public class ConsultaService {
             }
             consulta.setHorario(horario);
         }
+    }
+
+    @Transactional
+    public void conectaClienteeAnimalaConsulta(Long idConsulta, Long idCliente, Long idAnimal) {
+        Set<Animal> pets = null;
+        Set<Consulta> consultasCliente = null;
+        Set<Consulta> consultasAnimal = null;
+        Consulta consulta = consultaRepository.findById(idConsulta)
+                .orElseThrow(() -> new IllegalStateException("Consulta com id " + idConsulta + " não existe."));
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não existe"));
+        Animal animal = animalRepository.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idCliente + " não existe"));
+        pets = cliente.getPets();
+        consultasCliente = cliente.getConsultas();
+        consultasAnimal = animal.getConsultas();
+        if (!pets.contains(animal)) {
+            throw new IllegalStateException("Esse animal não pertence a esse cliente.");
+        }
+        // consulta.setCliente(cliente);
+        // consulta.setAnimal(animal);
+        consultasCliente.add(consulta);
+        consultasAnimal.add(consulta);
+        cliente.setConsultas(consultasCliente);
+        animal.setConsultas(consultasAnimal);
     }
 
 }

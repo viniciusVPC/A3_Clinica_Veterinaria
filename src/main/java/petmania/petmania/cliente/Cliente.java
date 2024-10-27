@@ -1,9 +1,8 @@
 package petmania.petmania.cliente;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import org.hibernate.annotations.ManyToAny;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -12,12 +11,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 //responsáveis por criar getters, setters e um construtor
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import petmania.petmania.animal.Animal;
+import petmania.petmania.consulta.Consulta;
 
 @Getter
 @Setter
@@ -30,28 +31,41 @@ public class Cliente {
     private Long id; // Primary key
     private String nome;
     private LocalDate dataNasc;
-    private String CPF;
+    private String cpf;
     private String email;
+
+    @ManyToMany
+    @JoinTable(name = "cliente_animal", joinColumns = @JoinColumn(name = "idCliente"), inverseJoinColumns = @JoinColumn(name = "idAnimal"))
+    private Set<Animal> pets = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCliente", referencedColumnName = "id")
+    private Set<Consulta> consultas = new HashSet<>();
 
     public Cliente() {
 
     }
 
     // Construtor sem o id
-    public Cliente(String nome, LocalDate dataNasc, String CPF, String email) {
+    public Cliente(String nome, LocalDate dataNasc, String cpf, String email, Set<Animal> pets,
+            Set<Consulta> consultas) {
         this.nome = nome;
         this.dataNasc = dataNasc;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.email = email;
+        this.pets = pets;
+        this.consultas = consultas;
     }
 
     // Construtor com todos os atributos
-    public Cliente(Long id, String nome, LocalDate dataNasc, String CPF, String email) {
+    public Cliente(Long id, String nome, LocalDate dataNasc, String cpf, String email, Set<Animal> pets,
+            Set<Consulta> consultas) {
         this.id = id;
         this.nome = nome;
         this.dataNasc = dataNasc;
-        this.CPF = CPF;
+        this.cpf = cpf;
         this.email = email;
+        this.pets = pets;
+        this.consultas = consultas;
     }
-
 }

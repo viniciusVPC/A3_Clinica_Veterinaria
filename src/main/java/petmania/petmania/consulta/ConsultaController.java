@@ -53,4 +53,10 @@ public class ConsultaController {
         consultaService.updateConsulta(idConsulta, tipo, horario);
     }
 
+    @PutMapping(path = "{idConsulta}/cliente/{idCliente}/animal/{idAnimal}")
+    public void conectaClienteeAnimalaConsulta(@PathVariable Long idConsulta,
+            @PathVariable Long idCliente,
+            @PathVariable Long idAnimal) {
+        consultaService.conectaClienteeAnimalaConsulta(idConsulta, idCliente, idAnimal);
+    }
 }

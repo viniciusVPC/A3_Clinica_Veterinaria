@@ -51,8 +51,15 @@ public class ClienteController {
     @PutMapping(path = "{idCliente}")
     public void updateCliente(@PathVariable("idCliente") Long idCliente,
             @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String CPF,
+            @RequestParam(required = false) String cpf,
             @RequestParam(required = false) String email) {
-        clienteService.updateCliente(idCliente, nome, CPF, email);
+        clienteService.updateCliente(idCliente, nome, cpf, email);
     }
+
+    @PutMapping(path = "{idCliente}/animal/{idAnimal}")
+    public void conectaAnimalaCliente(@PathVariable Long idCliente,
+            @PathVariable Long idAnimal) {
+        clienteService.conectaAnimalaCliente(idCliente, idAnimal);
+    }
+
 }
