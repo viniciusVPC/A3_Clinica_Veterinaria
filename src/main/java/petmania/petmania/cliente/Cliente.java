@@ -1,15 +1,23 @@
 package petmania.petmania.cliente;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
 //responsáveis por criar getters, setters e um construtor
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import petmania.petmania.animal.Animal;
 
 @Getter
 @Setter
@@ -24,29 +32,26 @@ public class Cliente {
     private LocalDate dataNasc;
     private String CPF;
     private String email;
-    private Long idPedido; // Foreign key
 
     public Cliente() {
 
     }
 
     // Construtor sem o id
-    public Cliente(String nome, LocalDate dataNasc, String CPF, String email, Long idPedido) {
+    public Cliente(String nome, LocalDate dataNasc, String CPF, String email) {
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.CPF = CPF;
         this.email = email;
-        this.idPedido = idPedido;
     }
 
     // Construtor com todos os atributos
-    public Cliente(Long id, String nome, LocalDate dataNasc, String CPF, String email, Long idPedido) {
+    public Cliente(Long id, String nome, LocalDate dataNasc, String CPF, String email) {
         this.id = id;
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.CPF = CPF;
         this.email = email;
-        this.idPedido = idPedido;
     }
 
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import petmania.petmania.animal.AnimalRepository;
 
 @Service
 public class ClienteService {
@@ -29,6 +30,7 @@ public class ClienteService {
         if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
         }
+
         clienteRepository.save(cliente);
     }
 
