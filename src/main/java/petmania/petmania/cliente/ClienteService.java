@@ -30,11 +30,14 @@ public class ClienteService {
     // repetido"
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewCliente(Cliente cliente) {
-        Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
-        if (clienteOptional.isPresent()) {
+        Optional<Cliente> clienteCpfOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
+        Optional<Cliente> clienteEmailOptional = clienteRepository.findClienteByEmail(cliente.getEmail());
+        if (clienteCpfOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
         }
-
+        if (clienteEmailOptional.isPresent()) {
+            throw new IllegalStateException("já existe um cliente com esse email cadastrado");
+        }
         clienteRepository.save(cliente);
     }
 
@@ -50,7 +53,7 @@ public class ClienteService {
     }
 
     // regra de negócio relacionada à edição de um cliente já existente.
-    // verifica se existe cliente com esse id. Caso não, joga um erro
+    // verifica se existe cliente com esse id. Caso não, joga um erro.
     // se existe, atualiza as informações do cliente na TABLE
     // o @Transactional torna desnecessário o uso de Querys
     @Transactional

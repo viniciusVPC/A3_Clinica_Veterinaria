@@ -43,7 +43,6 @@ public class ClienteController {
     // função DELETE da api
     @DeleteMapping(path = "{idCliente}")
     public void deleteCliente(@PathVariable("idCliente") Long idCliente) {
-        // TODO verificar id not null
         clienteService.deleteCliente(idCliente);
     }
 
@@ -56,6 +55,7 @@ public class ClienteController {
         clienteService.updateCliente(idCliente, nome, cpf, email);
     }
 
+    // conecta animal ao dono
     @PutMapping(path = "{idCliente}/animal/{idAnimal}")
     public void conectaAnimalaCliente(@PathVariable Long idCliente,
             @PathVariable Long idAnimal) {

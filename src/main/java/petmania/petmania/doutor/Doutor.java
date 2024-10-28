@@ -1,4 +1,4 @@
-package petmania.petmania.cliente;
+package petmania.petmania.doutor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -10,63 +10,57 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-//responsáveis por criar getters, setters e um construtor
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import petmania.petmania.animal.Animal;
 import petmania.petmania.consulta.Consulta;
 
 @Getter
 @Setter
 @ToString
 @Entity
-public class Cliente {
+public class Doutor {
     // Atributos
     @Id // indica que este atributo é uma PK
     @GeneratedValue(strategy = GenerationType.IDENTITY) // número sequancial 1, 2, 3...
-    private Long id; // Primary key
+    private Long idDoutor;
     private String nome;
     private LocalDate dataNasc;
     private String cpf;
     private String email;
-
-    @ManyToMany
-    @JoinTable(name = "cliente_animal", joinColumns = @JoinColumn(name = "idCliente"), inverseJoinColumns = @JoinColumn(name = "idAnimal"))
-    private Set<Animal> pets = new HashSet<>();
+    private String especialidade;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idCliente", referencedColumnName = "id")
+    @JoinColumn(name = "idDoutor", referencedColumnName = "idDoutor")
     private Set<Consulta> consultas = new HashSet<>();
 
     // Construtores
-    public Cliente() {
-
+    // Construtor vazio
+    public Doutor() {
     }
 
     // Construtor sem o id
-    public Cliente(String nome, LocalDate dataNasc, String cpf, String email, Set<Animal> pets,
+    public Doutor(String nome, LocalDate dataNasc, String cpf, String email, String especialidade,
             Set<Consulta> consultas) {
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.email = email;
-        this.pets = pets;
+        this.especialidade = especialidade;
         this.consultas = consultas;
     }
 
     // Construtor com todos os atributos
-    public Cliente(Long id, String nome, LocalDate dataNasc, String cpf, String email, Set<Animal> pets,
+    public Doutor(Long idDoutor, String nome, LocalDate dataNasc, String cpf, String email, String especialidade,
             Set<Consulta> consultas) {
-        this.id = id;
+        this.idDoutor = idDoutor;
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.email = email;
-        this.pets = pets;
+        this.especialidade = especialidade;
         this.consultas = consultas;
     }
+
 }
