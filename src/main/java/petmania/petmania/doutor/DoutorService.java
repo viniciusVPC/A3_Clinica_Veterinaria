@@ -21,8 +21,7 @@ public class DoutorService {
     }
 
     // Regra de negócio relacionada ao cadastro de um novo doutor.
-    // Se já existe um doutor com o mesmo CPF ele joga um erro de "doutore
-    // repetido"
+    // Verifica se já existe doutor com esse cpf ou email
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewDoutor(Doutor doutor) {
         Optional<Doutor> doutorOptional = doutorRepository.findDoutorByCpf(doutor.getCpf());
@@ -48,8 +47,8 @@ public class DoutorService {
     }
 
     // regra de negócio relacionada à edição de um doutor já existente.
-    // verifica se existe doutor com esse id. Caso não, joga um erro.
-    // se existe, atualiza as informações do doutor na TABLE
+    // verifica se existe doutor com esse id
+    // Verifica se já não há um doutor com o mesmo cpf ou email
     // o @Transactional torna desnecessário o uso de Querys
     @Transactional
     public void updateDoutor(Long idDoutor, String nome, String cpf, String email, String especialidade) {

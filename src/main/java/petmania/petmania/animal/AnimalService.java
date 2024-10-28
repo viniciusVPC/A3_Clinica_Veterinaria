@@ -22,15 +22,8 @@ public class AnimalService {
     }
 
     // Regra de negócio relacionada ao cadastro de um novo animal.
-    // Se já existe um animal com o mesmo nome e data de nascimento ele joga um erro
-    // de "animal repetido"
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewAnimal(Animal animal) {
-        Optional<Animal> animalDataOptional = animalRepository.findAnimalByDataNasc(animal.getDataNasc());
-        Optional<Animal> animalNomeOptional = animalRepository.findAnimalByNome(animal.getNome());
-        if (animalDataOptional.isPresent() && animalNomeOptional.isPresent()) {
-            throw new IllegalStateException("já existe um animal com esse nome com essa data de nascimento");
-        }
         animalRepository.save(animal);
     }
 

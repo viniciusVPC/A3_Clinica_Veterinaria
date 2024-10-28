@@ -37,6 +37,7 @@ public class ConsultaService {
     }
 
     // Regra de negócio que verifica se há consulta marcada no mesmo horário.
+    // TODO criar uma distância mínima entre horários de consultas de 30 minutos
     // Caso sim, lança um erro. Caso não, salva a consulta
     // TODO Fazer o erro não parar o programa, só mostrar uma janela
     public void addNewConsulta(Consulta consulta) {
@@ -57,6 +58,10 @@ public class ConsultaService {
         consultaRepository.deleteById(idConsulta);
     }
 
+    // Regra de negócio que edita os valores da consulta
+    // Verifica se existe consulta
+    // Verifica se já tem consulta marcada pra esse horário
+    // TODO criar uma distância mínima entre horários de consultas de 30 minutos
     @Transactional
     public void updateConsulta(Long idConsulta, String tipo, LocalDateTime horario) {
         Consulta consulta = consultaRepository.findById(idConsulta)
@@ -98,9 +103,6 @@ public class ConsultaService {
         if (!pets.contains(animal)) {
             throw new IllegalStateException("Esse animal não pertence a esse cliente.");
         }
-        // consulta.setCliente(cliente);
-        // consulta.setAnimal(animal);
-        // consulta.setDoutor(doutor);
         consultasCliente.add(consulta);
         consultasAnimal.add(consulta);
         consultasDoutor.add(consulta);

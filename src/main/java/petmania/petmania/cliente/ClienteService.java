@@ -26,8 +26,7 @@ public class ClienteService {
     }
 
     // Regra de negócio relacionada ao cadastro de um novo cliente.
-    // Se já existe um cliente com o mesmo CPF ele joga um erro de "cliente
-    // repetido"
+    // Verifica se já existe cliente com o mesmo cpf ou email
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewCliente(Cliente cliente) {
         Optional<Cliente> clienteCpfOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
@@ -54,7 +53,7 @@ public class ClienteService {
 
     // regra de negócio relacionada à edição de um cliente já existente.
     // verifica se existe cliente com esse id. Caso não, joga um erro.
-    // se existe, atualiza as informações do cliente na TABLE
+    // verifica se já existe cliente com esse cpf ou email
     // o @Transactional torna desnecessário o uso de Querys
     @Transactional
     public void updateCliente(Long idCliente, String nome, String cpf, String email) {
@@ -80,6 +79,9 @@ public class ClienteService {
         }
     }
 
+    // Regra de negócio responsável por conectar um animal a um cliente.
+    // verifica se existe cliente e animal
+    // TODO verificar se o cliente já não tem esse animal
     @Transactional
     public void conectaAnimalaCliente(Long idCliente, Long idAnimal) {
         Set<Animal> pets = null;
