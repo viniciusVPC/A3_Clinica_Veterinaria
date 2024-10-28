@@ -47,6 +47,7 @@ public class Animal {
     @ManyToMany(mappedBy = "pets")
     private Set<Cliente> donos = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAnimal", referencedColumnName = "id")
     private Set<Consulta> consultas = new HashSet<>();

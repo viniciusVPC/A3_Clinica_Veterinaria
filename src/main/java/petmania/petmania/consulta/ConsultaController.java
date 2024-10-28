@@ -53,10 +53,12 @@ public class ConsultaController {
         consultaService.updateConsulta(idConsulta, tipo, horario);
     }
 
-    @PutMapping(path = "{idConsulta}/cliente/{idCliente}/animal/{idAnimal}")
-    public void conectaClienteeAnimalaConsulta(@PathVariable Long idConsulta,
+    // PUT cliente, animal e doutor dentro de consulta
+    @PutMapping(path = "{idConsulta}/cliente/{idCliente}/animal/{idAnimal}/doutor/{idDoutor}")
+    public void conectaClienteAnimalEDoutorAConsulta(@PathVariable Long idConsulta,
             @PathVariable Long idCliente,
-            @PathVariable Long idAnimal) {
-        consultaService.conectaClienteeAnimalaConsulta(idConsulta, idCliente, idAnimal);
+            @PathVariable Long idAnimal,
+            @PathVariable Long idDoutor) {
+        consultaService.conectaClienteAnimalEDoutorAConsulta(idConsulta, idCliente, idAnimal, idDoutor);
     }
 }

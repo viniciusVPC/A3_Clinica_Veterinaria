@@ -14,18 +14,22 @@ import petmania.petmania.animal.Animal;
 import petmania.petmania.animal.AnimalRepository;
 import petmania.petmania.cliente.Cliente;
 import petmania.petmania.cliente.ClienteRepository;
+import petmania.petmania.doutor.Doutor;
+import petmania.petmania.doutor.DoutorRepository;
 
 @Service
 public class ConsultaService {
     private ConsultaRepository consultaRepository;
     private ClienteRepository clienteRepository;
     private AnimalRepository animalRepository;
+    private DoutorRepository doutorRepository;
 
     public ConsultaService(ConsultaRepository consultaRepository, ClienteRepository clienteRepository,
-            AnimalRepository animalRepository) {
+            AnimalRepository animalRepository, DoutorRepository doutorRepository) {
         this.consultaRepository = consultaRepository;
         this.clienteRepository = clienteRepository;
         this.animalRepository = animalRepository;
+        this.doutorRepository = doutorRepository;
     }
 
     public List<Consulta> getConsultas() {
@@ -69,29 +73,40 @@ public class ConsultaService {
         }
     }
 
+    // Conecta cliente, animal e doutor à consulta
+    // Verifica se consulta, cliente, animal e doutor existem
+    // Verifica se animal pertence a cliente
+    // TODO verificar se doutor tem horário disponível
     @Transactional
-    public void conectaClienteeAnimalaConsulta(Long idConsulta, Long idCliente, Long idAnimal) {
+    public void conectaClienteAnimalEDoutorAConsulta(Long idConsulta, Long idCliente, Long idAnimal, Long idDoutor) {
         Set<Animal> pets = null;
         Set<Consulta> consultasCliente = null;
         Set<Consulta> consultasAnimal = null;
+        Set<Consulta> consultasDoutor = null;
         Consulta consulta = consultaRepository.findById(idConsulta)
                 .orElseThrow(() -> new IllegalStateException("Consulta com id " + idConsulta + " não existe."));
         Cliente cliente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não existe"));
         Animal animal = animalRepository.findById(idAnimal)
-                .orElseThrow(() -> new IllegalStateException("Animal com id " + idCliente + " não existe"));
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
+        Doutor doutor = doutorRepository.findById(idDoutor)
+                .orElseThrow(() -> new IllegalStateException("Doutor com id " + idDoutor + " não existe"));
         pets = cliente.getPets();
         consultasCliente = cliente.getConsultas();
         consultasAnimal = animal.getConsultas();
+        consultasDoutor = doutor.getConsultas();
         if (!pets.contains(animal)) {
             throw new IllegalStateException("Esse animal não pertence a esse cliente.");
         }
         // consulta.setCliente(cliente);
         // consulta.setAnimal(animal);
+        // consulta.setDoutor(doutor);
         consultasCliente.add(consulta);
         consultasAnimal.add(consulta);
+        consultasDoutor.add(consulta);
         cliente.setConsultas(consultasCliente);
         animal.setConsultas(consultasAnimal);
+        doutor.setConsultas(consultasDoutor);
     }
 
 }
