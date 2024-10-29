@@ -2,6 +2,7 @@
 package petmania.petmania.cliente;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,6 +32,14 @@ public class ClienteController {
     public List<Cliente> getClientes() {
         return clienteService.getClientes();
     }
+
+    //ESPECIFICO PRA TESTE HTML
+    /* @GetMapping("/ola")
+    public ModelAndView ola(){
+        ModelAndView mv = new ModelAndView("hello");
+        mv.addObject("nome", "joão");
+        return mv;
+    } */
 
     // função POST da api
     @PostMapping
