@@ -37,7 +37,7 @@ public class ConsultaService {
     }
 
     // Regra de negócio que verifica se há consulta marcada no mesmo horário.
-    // TODO criar uma distância mínima entre horários de consultas de 30 minutos
+    // TODO criar uma distância mínima entre horários de consultas de 30 minutos com o mesmo doutor
     // Caso sim, lança um erro. Caso não, salva a consulta
     // TODO Fazer o erro não parar o programa, só mostrar uma janela
     public void addNewConsulta(Consulta consulta) {

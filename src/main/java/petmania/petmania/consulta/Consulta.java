@@ -2,7 +2,6 @@ package petmania.petmania.consulta;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.CascadeType;
 /* import jakarta.persistence.CascadeType; */
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

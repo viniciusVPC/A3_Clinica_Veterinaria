@@ -3,7 +3,6 @@ package petmania.petmania.animal;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
