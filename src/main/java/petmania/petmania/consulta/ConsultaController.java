@@ -33,14 +33,14 @@ public class ConsultaController {
     }
 
     // POST
-    @PostMapping
-    public void criaConsulta(@RequestBody Consulta consulta) {
+    @PostMapping(path = "/cliente/{idCliente}/animal/{idAnimal}/doutor/{idDoutor}")
+    public void criaConsulta(@RequestBody Consulta consulta, @PathVariable Long idCliente, @PathVariable Long idAnimal, @PathVariable Long idDoutor) {
         System.out.println(consulta);
-        consultaService.addNewConsulta(consulta);
+        consultaService.addNewConsulta(consulta, idCliente, idAnimal, idDoutor);
     }
 
     // DELETE
-    @DeleteMapping(path = { "idConsulta" })
+    @DeleteMapping(path = "{idConsulta}")
     public void deleteConsulta(@PathVariable("idConsulta") Long idConsulta) {
         consultaService.deleteConsulta(idConsulta);
     }

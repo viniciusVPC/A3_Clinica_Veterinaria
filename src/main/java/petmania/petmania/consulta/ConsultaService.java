@@ -36,26 +36,84 @@ public class ConsultaService {
         return consultaRepository.findAll();
     }
 
-    // Regra de negócio que verifica se há consulta marcada no mesmo horário.
-    // TODO criar uma distância mínima entre horários de consultas de 30 minutos com o mesmo doutor
-    // Caso sim, lança um erro. Caso não, salva a consulta
-    // TODO Fazer o erro não parar o programa, só mostrar uma janela
-    public void addNewConsulta(Consulta consulta) {
-        Optional<Consulta> consultaOptional = consultaRepository.findConsultaByHorario(consulta.getHorario());
-        if (consultaOptional.isPresent()) {
-            throw new IllegalStateException("Já há uma consulta marcada pra esse horário.");
+    // TODO botão que verifica se a data de todas as consultas já passaram da data
+    // atual do dia, colocando elas como "vencidas" ou "passadas.
+
+    // Toda consulta deve ser criada conectando um cliente, animal e doutor à mesma
+    // verifica se cliente, animal e doutor existem
+    // Verifica se animal pertence a cliente
+    // Roda um for durante todas as consultas do doutor e verifica se a nova
+    // consulta está marcada para um horário com diferença maior que
+    // 30 minutos entre consultas do doutor
+    // se tudo está correto, cria consulta e conecta ela à todos
+    public void addNewConsulta(Consulta consulta, Long idCliente, Long idAnimal, Long idDoutor) {
+        Set<Animal> pets = null;
+        Set<Consulta> consultasCliente = null;
+        Set<Consulta> consultasAnimal = null;
+        Set<Consulta> consultasDoutor = null;
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não existe"));
+        Animal animal = animalRepository.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
+        Doutor doutor = doutorRepository.findById(idDoutor)
+                .orElseThrow(() -> new IllegalStateException("Doutor com id " + idDoutor + " não existe"));
+        pets = cliente.getPets();
+
+        if (!pets.contains(animal)) {
+            throw new IllegalStateException("Esse animal não pertence a esse cliente.");
         }
+        consultasDoutor = doutor.getConsultas();
+        for (Consulta consultaDoutor : consultasDoutor) {
+            if (consulta.getHorario().compareTo(consultaDoutor.getHorario().plusMinutes(30)) <= 0
+                    && consultaDoutor.getHorario().compareTo(consulta.getHorario().plusMinutes(30)) <= 0)
+                throw new IllegalStateException(
+                        "Doutor indisponível.Consultas devem ser marcadas com um intervalo de 30 minutos entre si");
+        }
+        consultasCliente = cliente.getConsultas();
+        consultasAnimal = animal.getConsultas();
+
+        consultasCliente.add(consulta);
+        consultasAnimal.add(consulta);
+        consultasDoutor.add(consulta);
         consultaRepository.save(consulta);
+        cliente.setConsultas(consultasCliente);
+        animal.setConsultas(consultasAnimal);
+        doutor.setConsultas(consultasDoutor);
     }
 
     // Regra de negócio que verifica se existe consulta com esse id.
+    // Verifica se existem os cliente, animal e doutor dessa consulta
     // Se sim, lança um erro. Se não, deleta a consulta da TABLE
+    // Deleta também a consulta dos históricos de todos
     public void deleteConsulta(Long idConsulta) {
-        boolean existe = consultaRepository.existsById(idConsulta);
-        if (!existe) {
-            throw new IllegalStateException("Consulta com id " + idConsulta + " não existe.");
-        }
+        Set<Consulta> consultasCliente = null;
+        Set<Consulta> consultasAnimal = null;
+        Set<Consulta> consultasDoutor = null;
+        Consulta consulta = consultaRepository.findById(idConsulta)
+                .orElseThrow(() -> new IllegalStateException("Consulta com id " + idConsulta + " não existe."));
+
+        Cliente cliente = clienteRepository.findById(consulta.getCliente().getId())
+                .orElseThrow(() -> new IllegalStateException(
+                        "Cliente com id " + consulta.getCliente().getId() + " não existe"));
+        Animal animal = animalRepository.findById(consulta.getAnimal().getId())
+                .orElseThrow(() -> new IllegalStateException(
+                        "Animal com id " + consulta.getAnimal().getId() + " não existe"));
+        Doutor doutor = doutorRepository.findById(consulta.getDoutor().getIdDoutor())
+                .orElseThrow(() -> new IllegalStateException(
+                        "Doutor com id " + consulta.getDoutor().getIdDoutor() + " não existe"));
+
+        consultasCliente = cliente.getConsultas();
+        consultasAnimal = animal.getConsultas();
+        consultasDoutor = doutor.getConsultas();
+        consultasCliente.remove(consulta);
+        consultasAnimal.remove(consulta);
+        consultasDoutor.remove(consulta);
+        cliente.setConsultas(consultasCliente);
+        animal.setConsultas(consultasAnimal);
+        doutor.setConsultas(consultasDoutor);
+
         consultaRepository.deleteById(idConsulta);
+
     }
 
     // Regra de negócio que edita os valores da consulta
