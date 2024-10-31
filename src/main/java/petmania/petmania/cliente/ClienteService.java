@@ -81,7 +81,7 @@ public class ClienteService {
 
     // Regra de negócio responsável por conectar um animal a um cliente.
     // verifica se existe cliente e animal
-    // TODO verificar se o cliente já não tem esse animal
+    // verifica se cliente já não tem animal com mesmo nome e dataNasc
     @Transactional
     public void conectaAnimalaCliente(Long idCliente, Long idAnimal) {
         Set<Animal> pets = null;
@@ -90,6 +90,11 @@ public class ClienteService {
         Animal animal = animalRepository.findById(idAnimal)
                 .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
         pets = cliente.getPets();
+        for (Animal pet : pets) {
+            if (pet.getNome() == animal.getNome() && pet.getDataNasc() == animal.getDataNasc()) {
+                throw new IllegalStateException("Cliente já tem esse animal");
+            }
+        }
         pets.add(animal);
         cliente.setPets(pets);
     }

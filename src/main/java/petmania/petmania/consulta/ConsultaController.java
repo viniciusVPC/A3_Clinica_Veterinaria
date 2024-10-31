@@ -34,7 +34,8 @@ public class ConsultaController {
 
     // POST
     @PostMapping(path = "/cliente/{idCliente}/animal/{idAnimal}/doutor/{idDoutor}")
-    public void criaConsulta(@RequestBody Consulta consulta, @PathVariable Long idCliente, @PathVariable Long idAnimal, @PathVariable Long idDoutor) {
+    public void criaConsulta(@RequestBody Consulta consulta, @PathVariable Long idCliente, @PathVariable Long idAnimal,
+            @PathVariable Long idDoutor) {
         System.out.println(consulta);
         consultaService.addNewConsulta(consulta, idCliente, idAnimal, idDoutor);
     }
@@ -49,16 +50,8 @@ public class ConsultaController {
     @PutMapping(path = "{idConsulta}")
     public void updateConsulta(@PathVariable("idConsulta") Long idConsulta,
             @RequestParam(required = false) String tipo,
-            @RequestParam(required = false) LocalDateTime horario) {
-        consultaService.updateConsulta(idConsulta, tipo, horario);
-    }
-
-    // PUT cliente, animal e doutor dentro de consulta
-    @PutMapping(path = "{idConsulta}/cliente/{idCliente}/animal/{idAnimal}/doutor/{idDoutor}")
-    public void conectaClienteAnimalEDoutorAConsulta(@PathVariable Long idConsulta,
-            @PathVariable Long idCliente,
-            @PathVariable Long idAnimal,
-            @PathVariable Long idDoutor) {
-        consultaService.conectaClienteAnimalEDoutorAConsulta(idConsulta, idCliente, idAnimal, idDoutor);
+            @RequestParam(required = false) LocalDateTime horario,
+            @RequestParam(required = false) Integer duracaoEmMinutos) {
+        consultaService.updateConsulta(idConsulta, tipo, horario, duracaoEmMinutos);
     }
 }

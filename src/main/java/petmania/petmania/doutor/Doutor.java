@@ -38,8 +38,6 @@ public class Doutor {
     @JoinColumn(name = "idDoutor", referencedColumnName = "idDoutor")
     private Set<Consulta> consultas = new HashSet<>();
 
-    //TODO inserir atributo que mostra os horários que o doutor está ocupado?
-
     // Construtores
     // Construtor vazio
     public Doutor() {

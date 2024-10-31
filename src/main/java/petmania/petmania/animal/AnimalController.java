@@ -41,7 +41,6 @@ public class AnimalController {
     // função DELETE da api
     @DeleteMapping(path = "{idAnimal}")
     public void deleteAnimal(@PathVariable("idAnimal") Long idAnimal) {
-        // TODO verificar id not null
         animalService.deleteAnimal(idAnimal);
     }
 
