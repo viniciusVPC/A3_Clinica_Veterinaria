@@ -63,7 +63,6 @@ public class ClienteService {
             cliente.setNome(nome);
         }
         if (cpf != null && cpf.length() > 0 && !Objects.equals(cliente.getCpf(), cpf)) {
-            System.out.println(cpf);
             Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cpf);
             if (clienteOptional.isPresent()) {
                 throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");

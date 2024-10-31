@@ -1,0 +1,333 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Requests Api Clinica Veterinária",
+    "collectionId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+    "dateExported": "2024-10-31T22:02:19.524Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "a45b89b9-837d-45ee-bbf8-2591ccdd7af1",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Get Clientes",
+            "url": "http://localhost:8080/api/v1/cliente",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-10-31T21:57:57.600Z",
+            "modified": "2024-10-31T21:57:57.600Z",
+            "headers": []
+        },
+        {
+            "_id": "ac348c86-cd72-454e-982c-4c55c6889637",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Get Animais",
+            "url": "http://localhost:8080/api/v1/animal",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-10-31T21:58:22.091Z",
+            "modified": "2024-10-31T21:58:22.091Z",
+            "headers": []
+        },
+        {
+            "_id": "c66625d5-8eea-4d70-abd6-b0380b47eab1",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Get Doutores",
+            "url": "http://localhost:8080/api/v1/doutor",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-10-31T21:58:28.676Z",
+            "modified": "2024-10-31T21:58:28.676Z",
+            "headers": []
+        },
+        {
+            "_id": "e174af39-1f0d-472a-bc03-581224a4ed3b",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Get Consulta",
+            "url": "http://localhost:8080/api/v1/consulta",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-10-31T21:58:35.890Z",
+            "modified": "2024-10-31T21:58:35.890Z",
+            "headers": []
+        },
+        {
+            "_id": "83f00e2f-4daa-401a-9d23-243be3aa06e2",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Get Admins",
+            "url": "http://localhost:8080/api/v1/admin",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-10-31T21:58:40.733Z",
+            "modified": "2024-10-31T21:58:40.733Z",
+            "headers": []
+        },
+        {
+            "_id": "2a3a3a3a-1907-4586-8279-d1a9b6d71827",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Post Cliente",
+            "url": "http://localhost:8080/api/v1/cliente",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-10-31T21:58:55.527Z",
+            "modified": "2024-10-31T21:58:55.527Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Vinícius\",\n  \"dataNasc\": \"2004-06-22\",\n  \"cpf\": \"987.789.123-28\",\n  \"email\": \"vinicius@gmail.com\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "15602453-8fc0-40e1-8d49-fd7d5ad4b74d",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Post Animal",
+            "url": "http://localhost:8080/api/v1/animal",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-10-31T21:59:01.108Z",
+            "modified": "2024-10-31T21:59:01.108Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Toby\",\n  \"dataNasc\": \"2018-05-21\",\n  \"especie\": \"cachorro\",\n  \"raca\": \"vira-lata\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "b55075f9-6751-478e-860f-1cd507232c60",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Post Doutor",
+            "url": "http://localhost:8080/api/v1/doutor",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-10-31T21:59:04.947Z",
+            "modified": "2024-10-31T21:59:04.947Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Johanna\",\n  \"dataNasc\": \"2004-06-22\",\n  \"cpf\": \"789.456.123-82\",\n  \"email\": \"johanna@gmail.com\",\n  \"especialidade\": \"cirurgias\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "bdc22dd9-9aee-42c0-9e11-c80905fbe9ad",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Post Consulta",
+            "url": "http://localhost:8080/api/v1/consulta/cliente/1/animal/1/doutor/1",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2024-10-31T21:59:09.138Z",
+            "modified": "2024-10-31T21:59:09.138Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tipo\": \"massagem\",\n  \"horario\": \"2024-11-13T13:30\",\n  \"duracaoEmMinutos\": \"30\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "22090a7f-16ce-434b-b6bb-9c03265aca15",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Post Admin",
+            "url": "http://localhost:8080/api/v1/admin",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2024-10-31T21:59:13.985Z",
+            "modified": "2024-10-31T21:59:13.985Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"ViníciusADM\",\n  \"dataNasc\": \"2003-06-22\",\n  \"cpf\": \"d\",\n  \"email\": \"vinicius3@gmail.com\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "6d1437a1-26f7-4488-bfe9-b350e16af9c4",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Delete Cliente",
+            "url": "http://localhost:8080/api/v1/cliente/2",
+            "method": "DELETE",
+            "sortNum": 110000,
+            "created": "2024-10-31T21:59:20.428Z",
+            "modified": "2024-10-31T21:59:20.428Z",
+            "headers": []
+        },
+        {
+            "_id": "a92eec49-a036-412e-8f0a-c8af4c09bfe6",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Delete Animal",
+            "url": "http://localhost:8080/api/v1/animal/4",
+            "method": "DELETE",
+            "sortNum": 120000,
+            "created": "2024-10-31T21:59:24.774Z",
+            "modified": "2024-10-31T21:59:24.774Z",
+            "headers": []
+        },
+        {
+            "_id": "45309aa8-7757-4b9e-9bda-3568a879107b",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Delete Doutor",
+            "url": "http://localhost:8080/api/v1/doutor/1",
+            "method": "DELETE",
+            "sortNum": 130000,
+            "created": "2024-10-31T21:59:53.959Z",
+            "modified": "2024-10-31T21:59:53.959Z",
+            "headers": []
+        },
+        {
+            "_id": "61922a10-6a39-4771-bec3-af453f69be61",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Delete Consulta",
+            "url": "http://localhost:8080/api/v1/consulta/3",
+            "method": "DELETE",
+            "sortNum": 140000,
+            "created": "2024-10-31T22:00:09.361Z",
+            "modified": "2024-10-31T22:00:09.361Z",
+            "headers": []
+        },
+        {
+            "_id": "6e0c7e34-0ff4-4046-8bd5-653dd5a09b25",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Delete Admin",
+            "url": "http://localhost:8080/api/v1/admin/1",
+            "method": "DELETE",
+            "sortNum": 150000,
+            "created": "2024-10-31T22:00:13.836Z",
+            "modified": "2024-10-31T22:00:13.836Z",
+            "headers": []
+        },
+        {
+            "_id": "86632461-8af4-46d3-b06b-bbda80b04970",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Update Cliente",
+            "url": "http://localhost:8080/api/v1/cliente/3?cpf=001.001.001-00",
+            "method": "PUT",
+            "sortNum": 160000,
+            "created": "2024-10-31T22:00:22.742Z",
+            "modified": "2024-10-31T22:00:22.742Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "cpf",
+                    "value": "001.001.001-00",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "f866d4b3-8b39-4f6e-aa0b-7e93e0f16347",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Update Animal",
+            "url": "http://localhost:8080/api/v1/animal/1?nome=Miara&raca=Bordercollie",
+            "method": "PUT",
+            "sortNum": 170000,
+            "created": "2024-10-31T22:00:27.440Z",
+            "modified": "2024-10-31T22:00:27.440Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "nome",
+                    "value": "Miara",
+                    "isPath": false
+                },
+                {
+                    "name": "raca",
+                    "value": "Bordercollie",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "76d04ad8-c323-46e4-917d-8a8ec9b9ae5b",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Update Doutor",
+            "url": "http://localhost:8080/api/v1/doutor/1?nome=\"João",
+            "method": "PUT",
+            "sortNum": 180000,
+            "created": "2024-10-31T22:01:18.377Z",
+            "modified": "2024-10-31T22:01:18.377Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "nome",
+                    "value": "\"João",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "d7bca31d-03d2-4906-a202-f3421671f9eb",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Update Consulta",
+            "url": "http://localhost:8080/api/v1/consulta/1?horario=2024-11-13T12:29:00",
+            "method": "PUT",
+            "sortNum": 190000,
+            "created": "2024-10-31T22:01:32.994Z",
+            "modified": "2024-10-31T22:01:32.994Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "horario",
+                    "value": "2024-11-13T12:29:00",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "f1fe6f60-bf7c-4094-9104-e139b28a32c0",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Update Admin",
+            "url": "http://localhost:8080/api/v1/admin/2?cpf=001.001.001-00&dataNasc=2003-06-22",
+            "method": "PUT",
+            "sortNum": 200000,
+            "created": "2024-10-31T22:01:38.713Z",
+            "modified": "2024-10-31T22:01:38.713Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "cpf",
+                    "value": "001.001.001-00",
+                    "isPath": false
+                },
+                {
+                    "name": "dataNasc",
+                    "value": "2003-06-22",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "ffce18af-c193-4168-a246-04e71df370d2",
+            "colId": "f1569e18-d608-47c3-b643-6ff360e4f72e",
+            "containerId": "",
+            "name": "Connect Animal to Cliente",
+            "url": "http://localhost:8080/api/v1/cliente/1/animal/1",
+            "method": "PUT",
+            "sortNum": 210000,
+            "created": "2024-10-31T22:02:04.754Z",
+            "modified": "2024-10-31T22:02:04.754Z",
+            "headers": []
+        }
+    ],
+    "ref": "CFHsev9Lz2I3FdneZSHgmy5t_--d40UGIwU7yZE1IGXrh2FC-LTXCinIzKMW8bUfluwofVqvUfUivNuBlG0H-g"
+}
