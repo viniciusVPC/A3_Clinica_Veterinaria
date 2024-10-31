@@ -24,12 +24,12 @@ public class AdministradorService {
     // Regras de negócio relacionadas ao cadastro de um novo Administrador
     // Verifica se já existe admin com mesmo cpf ou email
     public void addNewAdmin(Administrador admin) {
-        Optional<Administrador> adminCpfOptional = adminRepository.findAdminByCpf(admin.getCpf());
-        Optional<Administrador> adminEmailOptional = adminRepository.findAdminByEmail(admin.getEmail());
-        if (adminCpfOptional.isPresent()) {
+        Optional<Administrador> adminOptional = adminRepository.findAdminByCpf(admin.getCpf());
+        if (adminOptional.isPresent()) {
             throw new IllegalStateException("Já existe um administrador com esse cpf");
         }
-        if (adminEmailOptional.isPresent()) {
+        adminOptional = adminRepository.findAdminByEmail(admin.getEmail());
+        if (adminOptional.isPresent()) {
             throw new IllegalStateException("Já existe um administrador com esse email");
         }
         if (!admin.getDataNasc().isBefore(LocalDate.now().minusYears(18))) {

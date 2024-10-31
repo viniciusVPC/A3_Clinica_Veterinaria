@@ -1,5 +1,6 @@
 package petmania.petmania.doutor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,6 +33,10 @@ public class DoutorService {
         if (doutorOptional.isPresent()) {
             throw new IllegalStateException("Já existe um doutor cadastrado com esse email");
         }
+        if (!doutor.getDataNasc().isBefore(LocalDate.now().minusYears(18))) {
+            throw new IllegalStateException(
+                    "Data de nascimento inválida. Um administrador precisa ser maior de idade.");
+        }
         doutorRepository.save(doutor);
     }
 
@@ -51,11 +56,19 @@ public class DoutorService {
     // Verifica se já não há um doutor com o mesmo cpf ou email
     // o @Transactional torna desnecessário o uso de Querys
     @Transactional
-    public void updateDoutor(Long idDoutor, String nome, String cpf, String email, String especialidade) {
+    public void updateDoutor(Long idDoutor, String nome, LocalDate dataNasc, String cpf, String email,
+            String especialidade) {
         Doutor doutor = doutorRepository.findById(idDoutor)
                 .orElseThrow(() -> new IllegalStateException("Doutor com o id " + idDoutor + " não existe."));
         if (nome != null && nome.length() > 0 && !Objects.equals(doutor.getNome(), nome)) {
             doutor.setNome(nome);
+        }
+        if (dataNasc != null && !Objects.equals(doutor.getDataNasc(), dataNasc)) {
+            if (!dataNasc.isBefore(LocalDate.now().minusYears(18))) {
+                throw new IllegalStateException(
+                        "Data de nascimento inválida. Um doutor precisa ser maior de idade.");
+            }
+            doutor.setDataNasc(dataNasc);
         }
         if (cpf != null && cpf.length() > 0 && !Objects.equals(doutor.getCpf(), cpf)) {
             Optional<Doutor> doutorOptional = doutorRepository.findDoutorByCpf(cpf);

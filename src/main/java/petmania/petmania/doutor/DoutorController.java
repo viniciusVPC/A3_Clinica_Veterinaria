@@ -1,5 +1,6 @@
 package petmania.petmania.doutor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,10 @@ public class DoutorController {
     @PutMapping(path = "{idDoutor}")
     public void updateDoutor(@PathVariable("idDoutor") Long idDoutor,
             @RequestParam(required = false) String nome,
+            @RequestParam(required = false) LocalDate dataNasc,
             @RequestParam(required = false) String cpf,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String especialidade) {
-        doutorService.updateDoutor(idDoutor, nome, cpf, email, especialidade);
+        doutorService.updateDoutor(idDoutor, nome, dataNasc, cpf, email, especialidade);
     }
 }

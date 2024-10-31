@@ -29,12 +29,12 @@ public class ClienteService {
     // Verifica se já existe cliente com o mesmo cpf ou email
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewCliente(Cliente cliente) {
-        Optional<Cliente> clienteCpfOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
-        Optional<Cliente> clienteEmailOptional = clienteRepository.findClienteByEmail(cliente.getEmail());
-        if (clienteCpfOptional.isPresent()) {
+        Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
+        if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
         }
-        if (clienteEmailOptional.isPresent()) {
+        clienteOptional = clienteRepository.findClienteByEmail(cliente.getEmail());
+        if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse email cadastrado");
         }
         clienteRepository.save(cliente);
