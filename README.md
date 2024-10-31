@@ -71,8 +71,13 @@ Administrador: Cadastrar Cliente; Cadastrar Doutor; Cadastrar Pet; Cadastrar Adm
 - Um Cliente só pode ser criado se não houver clientes com o mesmo CPF e Email.
 - Um Cliente só pode ser modificado se não houver outro cliente com o mesmo CPF e Email.
 - Um Doutor só pode ser criado se não houver doutores com o mesmo CPF e Email.
+- Um Doutor só pode ser criado se ele for maior de idade.
 - Um Doutor só pode ser modificado se não houver outro doutor com o mesmo CPF e Email.
+- Um Doutor só pode ser modificado se a nova idade for maior que 18 anos.
 - Um Administrador só pode ser criado se não houver administradores com o mesmo CPF e Email.
+- Um Administrador só pode ser criado se ele for maior de idade.
+- Um Administrador só pode ser modificado se não houver outro administrador com o mesmo CPF e Email.
+- Um Administrador só pode ser modificado se a nova idade for maior que 18 anos.
 - Um Animal só pode ser conectado a um cliente se o mesmo não houver um outro animal com mesmo nome e data de nascimento (animal repetido)
 - Uma consulta só pode ser criada se o respectivo Animal pertencer ao respectivo Cliente
 - Uma consulta só pode ser criada se o seu horário não estiver dentro de um espaço menor que 30min das consultas já marcadas do seu respectivo Doutor (nem 30min antes nem 30min depois)
