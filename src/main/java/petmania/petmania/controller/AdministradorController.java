@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping(path = "api/v1/admin")
+@RequestMapping("/admins")
 public class AdministradorController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class AdministradorController {
     }
 
     // Função GET da api
-    @GetMapping
+    @GetMapping({"", "/"})
     public List<Administrador> getAdmins() {
         return adminService.getAdmins();
     }

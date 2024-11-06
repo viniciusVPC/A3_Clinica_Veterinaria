@@ -5,8 +5,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import org.springframework.ui.Model;
 import jakarta.transaction.Transactional;
 import petmania.petmania.model.Animal;
 import petmania.petmania.model.Cliente;
@@ -23,7 +25,12 @@ public class ClienteService {
         this.animalRepository = animalRepository;
     }
 
-    public List<Cliente> getClientes() {
+    //TODO quando tiver front retornar o link "cliente/index"
+    public List<Cliente> getClientes(Model model) {
+        //Varredura de todos os clientes no BD
+        /* var clientes = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        model.addAttribute("clientes", clientes);
+        return "clientes/index"; */
         return clienteRepository.findAll();
     }
 
