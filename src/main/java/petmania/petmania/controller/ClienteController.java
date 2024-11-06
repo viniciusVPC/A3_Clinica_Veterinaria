@@ -1,8 +1,10 @@
 // Cuida da camada API
-package petmania.petmania.cliente;
+package petmania.petmania.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+
+import petmania.petmania.model.Cliente;
+import petmania.petmania.service.ClienteService;
 
 import java.util.List;
 

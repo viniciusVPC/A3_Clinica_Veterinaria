@@ -1,4 +1,4 @@
-package petmania.petmania.administrador;
+package petmania.petmania.model;
 
 import java.time.LocalDate;
 

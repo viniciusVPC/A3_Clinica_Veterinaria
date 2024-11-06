@@ -1,4 +1,4 @@
-package petmania.petmania.doutor;
+package petmania.petmania.controller;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -6,6 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import petmania.petmania.model.Doutor;
+import petmania.petmania.service.DoutorService;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package petmania.petmania.doutor;
+package petmania.petmania.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import petmania.petmania.model.Doutor;
+import petmania.petmania.repository.DoutorRepository;
 
 @Service
 public class DoutorService {

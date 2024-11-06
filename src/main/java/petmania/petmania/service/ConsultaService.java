@@ -1,5 +1,5 @@
 //Cuida das regras de negócio
-package petmania.petmania.consulta;
+package petmania.petmania.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,12 +9,14 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import petmania.petmania.animal.Animal;
-import petmania.petmania.animal.AnimalRepository;
-import petmania.petmania.cliente.Cliente;
-import petmania.petmania.cliente.ClienteRepository;
-import petmania.petmania.doutor.Doutor;
-import petmania.petmania.doutor.DoutorRepository;
+import petmania.petmania.model.Animal;
+import petmania.petmania.model.Cliente;
+import petmania.petmania.model.Consulta;
+import petmania.petmania.model.Doutor;
+import petmania.petmania.repository.AnimalRepository;
+import petmania.petmania.repository.ClienteRepository;
+import petmania.petmania.repository.ConsultaRepository;
+import petmania.petmania.repository.DoutorRepository;
 
 @Service
 public class ConsultaService {

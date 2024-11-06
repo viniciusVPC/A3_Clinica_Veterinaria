@@ -1,5 +1,5 @@
 //Cuida da camada de regras de negócio
-package petmania.petmania.animal;
+package petmania.petmania.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import petmania.petmania.model.Animal;
+import petmania.petmania.repository.AnimalRepository;
 
 @Service
 public class AnimalService {
