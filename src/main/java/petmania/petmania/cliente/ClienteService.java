@@ -29,12 +29,12 @@ public class ClienteService {
     // Verifica se já existe cliente com o mesmo cpf ou email
     // TODO fazer o erro não pausar o programa e mostrar só uma janelinha avisando
     public void addNewCliente(Cliente cliente) {
-        Optional<Cliente> clienteCpfOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
-        Optional<Cliente> clienteEmailOptional = clienteRepository.findClienteByEmail(cliente.getEmail());
-        if (clienteCpfOptional.isPresent()) {
+        Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cliente.getCpf());
+        if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
         }
-        if (clienteEmailOptional.isPresent()) {
+        clienteOptional = clienteRepository.findClienteByEmail(cliente.getEmail());
+        if (clienteOptional.isPresent()) {
             throw new IllegalStateException("já existe um cliente com esse email cadastrado");
         }
         clienteRepository.save(cliente);
@@ -63,7 +63,6 @@ public class ClienteService {
             cliente.setNome(nome);
         }
         if (cpf != null && cpf.length() > 0 && !Objects.equals(cliente.getCpf(), cpf)) {
-            System.out.println(cpf);
             Optional<Cliente> clienteOptional = clienteRepository.findClienteByCpf(cpf);
             if (clienteOptional.isPresent()) {
                 throw new IllegalStateException("já existe um cliente com esse CPF cadastrado");
@@ -81,7 +80,7 @@ public class ClienteService {
 
     // Regra de negócio responsável por conectar um animal a um cliente.
     // verifica se existe cliente e animal
-    // TODO verificar se o cliente já não tem esse animal
+    // verifica se cliente já não tem animal com mesmo nome e dataNasc
     @Transactional
     public void conectaAnimalaCliente(Long idCliente, Long idAnimal) {
         Set<Animal> pets = null;
@@ -90,6 +89,11 @@ public class ClienteService {
         Animal animal = animalRepository.findById(idAnimal)
                 .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe"));
         pets = cliente.getPets();
+        for (Animal pet : pets) {
+            if (pet.getNome() == animal.getNome() && pet.getDataNasc() == animal.getDataNasc()) {
+                throw new IllegalStateException("Cliente já tem esse animal");
+            }
+        }
         pets.add(animal);
         cliente.setPets(pets);
     }

@@ -45,6 +45,7 @@ public class Consulta {
 
     private String tipo;
     private LocalDateTime horario;
+    private Integer duracaoEmMinutos;
 
     // Construtores
     // Construtor vazio
@@ -52,23 +53,18 @@ public class Consulta {
     }
 
     // Construtor sem o id
-    public Consulta(String tipo, LocalDateTime horario) {
-        /*
-         * this.idAnimal = idAnimal;
-         * this.idCliente = idCliente;
-         */
+    public Consulta(String tipo, LocalDateTime horario, Integer duracaoEmMinutos) {
         this.tipo = tipo;
         this.horario = horario;
+        this.duracaoEmMinutos = duracaoEmMinutos;
     }
 
     // Construtor com todos os atributos
-    public Consulta(Long idConsulta, Long idAnimal, Long idCliente, String tipo, LocalDateTime horario) {
+    public Consulta(Long idConsulta, Long idAnimal, Long idCliente, String tipo, LocalDateTime horario,
+            Integer duracaoEmMinutos) {
         this.idConsulta = idConsulta;
-        /*
-         * this.idAnimal = idAnimal;
-         * this.idCliente = idCliente;
-         */
         this.tipo = tipo;
         this.horario = horario;
+        this.duracaoEmMinutos = duracaoEmMinutos;
     }
 }
