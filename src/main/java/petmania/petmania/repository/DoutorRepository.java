@@ -1,9 +1,11 @@
-package petmania.petmania.doutor;
+package petmania.petmania.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import petmania.petmania.model.Doutor;
 
 public interface DoutorRepository extends JpaRepository<Doutor, Long> {
 

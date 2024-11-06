@@ -1,4 +1,4 @@
-package petmania.petmania.animal;
+package petmania.petmania.repository;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import petmania.petmania.model.Animal;
 
 //define qual o tipo ao qual esse repositório se refere, além da variável de ID do mesmo (Long)
 @Repository

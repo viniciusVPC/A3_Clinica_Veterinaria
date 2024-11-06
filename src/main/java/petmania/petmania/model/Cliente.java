@@ -1,4 +1,4 @@
-package petmania.petmania.cliente;
+package petmania.petmania.model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,8 +19,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import petmania.petmania.animal.Animal;
-import petmania.petmania.consulta.Consulta;
 
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package petmania.petmania.consulta;
+package petmania.petmania.model;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +15,6 @@ import jakarta.persistence.OneToOne; */
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import petmania.petmania.animal.Animal;
-/* import petmania.petmania.animal.Animal;
-import petmania.petmania.cliente.Cliente; */
-import petmania.petmania.cliente.Cliente;
-import petmania.petmania.doutor.Doutor;
 
 @Getter
 @Setter

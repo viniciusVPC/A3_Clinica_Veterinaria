@@ -1,7 +1,10 @@
 // Cuida da camada API
-package petmania.petmania.cliente;
+package petmania.petmania.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import petmania.petmania.model.Cliente;
+import petmania.petmania.service.ClienteService;
 
 import java.util.List;
 
@@ -31,6 +34,14 @@ public class ClienteController {
     public List<Cliente> getClientes() {
         return clienteService.getClientes();
     }
+
+    //ESPECIFICO PRA TESTE HTML
+    /* @GetMapping("/ola")
+    public ModelAndView ola(){
+        ModelAndView mv = new ModelAndView("hello");
+        mv.addObject("nome", "joão");
+        return mv;
+    } */
 
     // função POST da api
     @PostMapping

@@ -1,4 +1,4 @@
-package petmania.petmania.cliente;
+package petmania.petmania.service;
 
 import java.util.List;
 import java.util.Objects;
@@ -8,8 +8,10 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import petmania.petmania.animal.Animal;
-import petmania.petmania.animal.AnimalRepository;
+import petmania.petmania.model.Animal;
+import petmania.petmania.model.Cliente;
+import petmania.petmania.repository.AnimalRepository;
+import petmania.petmania.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
