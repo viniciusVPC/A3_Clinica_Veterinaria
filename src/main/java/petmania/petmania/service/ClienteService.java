@@ -5,11 +5,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import petmania.petmania.model.Animal;
 import petmania.petmania.model.Cliente;
 import petmania.petmania.repository.AnimalRepository;
@@ -17,21 +21,23 @@ import petmania.petmania.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
+    @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
     private AnimalRepository animalRepository;
 
-    public ClienteService(ClienteRepository clienteRepository, AnimalRepository animalRepository) {
-        this.clienteRepository = clienteRepository;
-        this.animalRepository = animalRepository;
+    public String mostraListaClientes(Model model) {
+        var clientes = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        model.addAttribute("clientes", clientes);
+        return "/clientes/index";
     }
 
-    //TODO quando tiver front retornar o link "cliente/index"
-    public List<Cliente> getClientes(Model model) {
-        //Varredura de todos os clientes no BD
-        /* var clientes = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
-        model.addAttribute("clientes", clientes);
-        return "clientes/index"; */
-        return clienteRepository.findAll();
+    public String addCliente(@Valid Cliente cliente, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "/clientes/add-cliente";
+        }
+        clienteRepository.save(cliente);
+        return "redirect:/clientes";
     }
 
     // Regra de negócio relacionada ao cadastro de um novo cliente.
