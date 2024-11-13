@@ -41,16 +41,16 @@ public class Cliente {
     private String nome;
 
     @NotNull(message = "Data de nascimento é obrigatória.")
-    @Past(message = "Data de nascimento inválida")
-    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida")
+    @Past(message = "Data de nascimento inválida.")
+    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNasc;
 
-    @NotBlank(message = "Cpf é obrigatório")
+    @NotBlank(message = "Cpf é obrigatório.")
     private String cpf;
 
-    @NotBlank(message = "Email é obrigatório")
-    @Email(message = "Email inválido")
+    @NotBlank(message = "Email é obrigatório.")
+    @Email(message = "Email inválido.")
     private String email;
 
     @ManyToMany

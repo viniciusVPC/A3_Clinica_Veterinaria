@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path = "/clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    ClienteRepository repo;
+    private ClienteRepository repo;
 
     @GetMapping("/signup")
     public String mostraFormularioSignUp(Cliente cliente) {

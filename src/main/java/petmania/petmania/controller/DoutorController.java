@@ -1,60 +1,73 @@
 package petmania.petmania.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import petmania.petmania.model.Doutor;
-import petmania.petmania.service.DoutorService;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
+import petmania.petmania.repository.DoutorRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PutMapping;
 
-@RestController
-@RequestMapping(path = "api/v1/doutor")
+import jakarta.validation.Valid;
+
+@Controller
+@RequestMapping("/doutores")
 public class DoutorController {
 
     @Autowired
-    private DoutorService doutorService;
+    private DoutorRepository repo;
 
-    public DoutorController(DoutorService doutorService) {
-        this.doutorService = doutorService;
+    @GetMapping("/signup")
+    public String mostraFormularioSignUp(Doutor doutor) {
+        return "/doutores/add-doutor";
     }
 
-    // GET
-    @GetMapping
-    public List<Doutor> getDoutores() {
-        return doutorService.getDoutores();
+    @PostMapping("/adddoutor")
+    public String addDoutor(@Valid Doutor doutor, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "/doutores/add-doutor";
+        }
+        System.out.println("chegou aqui");
+        repo.save(doutor);
+        return "redirect:/doutores";
     }
 
-    // POST
-    @PostMapping
-    public void cadastraNovoDoutor(@RequestBody Doutor doutor) {
-        doutorService.addNewDoutor(doutor);
+    @GetMapping({ "", "/" })
+    public String mostraListaDoutores(Model model) {
+        var doutores = repo.findAll(Sort.by(Sort.Direction.ASC, "idDoutor"));
+        model.addAttribute("doutores", doutores);
+        return "/doutores/index";
     }
 
-    // DELETE
-    @DeleteMapping(path = "{idDoutor}")
-    public void deleteDoutor(@PathVariable("idDoutor") Long idDoutor) {
-        doutorService.deleteDoutor(idDoutor);
+    @GetMapping("/edit/{id}")
+    public String mostraFormularioUpdate(@PathVariable("id") Long id, Model model) {
+        Doutor doutor = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Doutor com id " + id + " não existe."));
+        model.addAttribute("doutor", doutor);
+        return "/doutores/update-doutor";
     }
 
-    // PUT
-    @PutMapping(path = "{idDoutor}")
-    public void updateDoutor(@PathVariable("idDoutor") Long idDoutor,
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) LocalDate dataNasc,
-            @RequestParam(required = false) String cpf,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String especialidade) {
-        doutorService.updateDoutor(idDoutor, nome, dataNasc, cpf, email, especialidade);
+    @PostMapping("/update/{id}")
+    public String updateDoutor(@PathVariable("id") Long id, @Valid Doutor doutor, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "/doutores/update-doutor";
+        }
+        doutor.setIdDoutor(id);
+        repo.save(doutor);
+        return "redirect:/doutores";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteDoutor(@PathVariable("id") Long id, Model model) {
+        Doutor doutor = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Doutor com id " + id + " não existe."));
+        repo.delete(doutor);
+        return "redirect:/doutores";
+    }
+
 }
