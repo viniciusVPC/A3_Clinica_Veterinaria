@@ -32,7 +32,6 @@ public class AdministradorController {
         if (result.hasErrors()) {
             return "/admins/add-admin";
         }
-
         repo.save(admin);
         return "redirect:/admins";
     }

@@ -32,7 +32,6 @@ public class DoutorController {
         if (result.hasErrors()) {
             return "/doutores/add-doutor";
         }
-        System.out.println("chegou aqui");
         repo.save(doutor);
         return "redirect:/doutores";
     }
