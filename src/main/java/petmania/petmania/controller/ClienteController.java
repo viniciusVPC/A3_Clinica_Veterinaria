@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/clientes")
@@ -47,7 +46,6 @@ public class ClienteController {
         repo.save(cliente);
         return "redirect:/clientes";
     }
-
     @GetMapping({ "", "/" })
     public String mostraListaClientes(Model model) {
         var clientes = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
@@ -77,7 +75,6 @@ public class ClienteController {
         }
         cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
         clienteDto.getEmail(), null, null);
-
         cliente.setId(id);
         repo.save(cliente);
         return "redirect:/clientes";

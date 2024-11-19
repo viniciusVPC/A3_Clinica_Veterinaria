@@ -27,7 +27,6 @@ public class AdministradorController {
     public String mostraFormularioSignUp(Administrador admin) {
         return "/admins/add-admin";
     }
-
     @PostMapping("/addadmin")
     public String addAdmin(@Valid AdministradorDTO adminDto, BindingResult result, Model model) {
         if (result.hasErrors()) {

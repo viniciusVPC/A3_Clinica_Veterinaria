@@ -22,7 +22,6 @@ public class DoutorController {
 
     @Autowired
     private DoutorRepository repo;
-
     @GetMapping("/signup")
     public String mostraFormularioSignUp(Model model) {
         DoutorDTO doutorDto = new DoutorDTO();
@@ -77,5 +76,4 @@ public class DoutorController {
         repo.delete(doutor);
         return "redirect:/doutores";
     }
-
 }
