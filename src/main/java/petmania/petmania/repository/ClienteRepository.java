@@ -11,9 +11,9 @@ import petmania.petmania.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    @Query("SELECT s FROM Cliente s WHERE s.cpf = ?1")
+    //@Query("SELECT s FROM Cliente s WHERE s.cpf = ?1")
     Optional<Cliente> findClienteByCpf(String cpf);
 
-    @Query("SELECT s FROM Cliente s WHERE s.email = ?1")
+    //@Query("SELECT s FROM Cliente s WHERE s.email = ?1")
     Optional<Cliente> findClienteByEmail(String email);
 }

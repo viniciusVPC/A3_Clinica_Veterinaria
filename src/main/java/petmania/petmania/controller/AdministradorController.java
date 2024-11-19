@@ -1,60 +1,79 @@
 package petmania.petmania.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import petmania.petmania.dto.AdministradorDTO;
 import petmania.petmania.model.Administrador;
-import petmania.petmania.service.AdministradorService;
+import petmania.petmania.repository.AdministradorRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@RestController
+@Controller
 @RequestMapping("/admins")
 public class AdministradorController {
 
     @Autowired
-    private AdministradorService adminService;
+    private AdministradorRepository repo;
 
-    public AdministradorController(AdministradorService adminService) {
-        this.adminService = adminService;
+    @GetMapping("/signup")
+    public String mostraFormularioSignUp(Administrador admin) {
+        return "/admins/add-admin";
     }
 
-    // Função GET da api
-    @GetMapping({"", "/"})
-    public List<Administrador> getAdmins() {
-        return adminService.getAdmins();
+    @PostMapping("/addadmin")
+    public String addAdmin(@Valid AdministradorDTO adminDto, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "/admins/add-admin";
+        }
+        Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
+                adminDto.getEmail());
+
+        repo.save(admin);
+        return "redirect:/admins";
     }
 
-    // Função POST da api
-    @PostMapping
-    public void registraNovoAdmin(@RequestBody Administrador admin) {
-        adminService.addNewAdmin(admin);
+    @GetMapping({ "", "/" })
+    public String mostraListaAdmins(Model model) {
+        var admins = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        model.addAttribute("admins", admins);
+        return "/admins/index";
     }
 
-    // Função DELETE da api
-    @DeleteMapping(path = "{idAdmin}")
-    public void deleteAdmin(@PathVariable("idAdmin") Long idAdmin) {
-        adminService.deleteAdmin(idAdmin);
+    @GetMapping("/edit/{id}")
+    public String mostraFormularioUpdate(@PathVariable("id") Long id, Model model) {
+        Administrador admin = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
+        model.addAttribute("admin", admin);
+        return "/admins/update-admin";
     }
 
-    // Função PUT da api
-    @PutMapping(path = "{idAdmin}")
-    public void updateAdmin(@PathVariable("idAdmin") Long idAdmin,
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) LocalDate dataNasc,
-            @RequestParam(required = false) String cpf,
-            @RequestParam(required = false) String email) {
-        adminService.updateAdmin(idAdmin, nome, dataNasc, cpf, email);
+    @PostMapping("/update/{id}")
+    public String updateAdmin(@PathVariable("id") Long id, @Valid AdministradorDTO adminDto, BindingResult result,
+            Model model) {
+        if (result.hasErrors()) {
+            return "/admins/update-admin";
+        }
+        Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
+                adminDto.getEmail());
+        admin.setId(id);
+        repo.save(admin);
+        return "redirect:/admins";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteAdmin(@PathVariable("id") Long id, Model model) {
+        Administrador admin = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
+        repo.delete(admin);
+        return "redirect:/admins";
     }
 
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lista de Clientes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="container my-3" th:switch="${clientes}">
+      <h2 class="text-center mb-3" th:case="null">Ainda não tem clientes!</h2>
+      <div th:case="*">
+        <h2 class="text-center mb-3">Clientes:</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Data de Nascimento</th>
+              <th>Cpf</th>
+              <th>Email</th>
+              <th>Animais</th>
+              <th>Consultas</th>
+              <th>Editar</th>
+              <th>Deletar</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr th:each="cliente : ${clientes}">
+              <td th:text="${cliente.nome}"></td>
+              <td th:text="${cliente.dataNasc}"></td>
+              <td th:text="${cliente.cpf}"></td>
+              <td th:text="${cliente.email}"></td>
+              <td>
+                <a th:href="@{/clientes/{id}/animais(id=${cliente.id})}"
+                  >Animais</a
+                >
+              </td>
+              <td>
+                <a th:href="@{/clientes/{id}/consultas(id=${cliente.id})}"
+                  >Consultas</a
+                >
+              </td>
+              <td>
+                <a th:href="@{/clientes/edit(id=${cliente.id})}">Editar</a>
+              </td>
+              <td>
+                <a th:href="@{/clientes/delete/{id}(id=${cliente.id})}"
+                  >Deletar</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <a class="btn btn-primary" href="/clientes/signup"
+          >Adicione um novo cliente</a
+        >
+      </p>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

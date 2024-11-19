@@ -1,76 +1,101 @@
 // Cuida da camada API
 package petmania.petmania.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.Valid;
+import petmania.petmania.dto.ClienteDTO;
 import petmania.petmania.model.Cliente;
-import petmania.petmania.service.ClienteService;
-
-import java.util.List;
+import petmania.petmania.repository.ClienteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
-@RequestMapping(path = "api/v1/cliente")
+@Controller
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteRepository repo;
 
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
+    @GetMapping("/signup")
+    public String mostraFormularioSignUp(Model model) {
+        ClienteDTO clienteDTO = new ClienteDTO();
+        model.addAttribute("clienteDto", clienteDTO);
+        return "/clientes/add-cliente";
     }
 
-    // função GET da api
-    @GetMapping
-    public List<Cliente> getClientes() {
-        return clienteService.getClientes();
+    @PostMapping("/addcliente")
+    public String addCliente(@Valid @ModelAttribute("clienteDto") ClienteDTO clienteDto, BindingResult result,
+            Model model) {
+        // TODO verificar CPF e EMail únicos
+
+        if (result.hasErrors()) {
+            return "/clientes/add-cliente";
+        }
+
+        Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
+                clienteDto.getEmail(), null, null);
+
+        repo.save(cliente);
+        return "redirect:/clientes";
     }
 
-    //ESPECIFICO PRA TESTE HTML
-    /* @GetMapping("/ola")
-    public ModelAndView ola(){
-        ModelAndView mv = new ModelAndView("hello");
-        mv.addObject("nome", "joão");
-        return mv;
-    } */
-
-    // função POST da api
-    @PostMapping
-    // RequestBody mapeia automaticamente o objeto Animal do BODY do POST da api
-    public void registraNovoCliente(@RequestBody Cliente cliente) {
-        System.out.println(cliente);
-        clienteService.addNewCliente(cliente);
+    @GetMapping({ "", "/" })
+    public String mostraListaClientes(Model model) {
+        var clientes = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        model.addAttribute("clientes", clientes);
+        return "/clientes/index";
     }
 
-    // função DELETE da api
-    @DeleteMapping(path = "{idCliente}")
-    public void deleteCliente(@PathVariable("idCliente") Long idCliente) {
-        clienteService.deleteCliente(idCliente);
+    @GetMapping("/edit")
+    public String mostraFormularioUpdate(@RequestParam Long id, Model model) {
+        Cliente cliente = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
+        ClienteDTO clienteDto = new ClienteDTO(cliente.getNome(), cliente.getDataNasc(), cliente.getCpf(),
+                cliente.getEmail(), null, null);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("clienteDto", clienteDto);
+        return "/clientes/update-cliente";
     }
 
-    // função PUT da api
-    @PutMapping(path = "{idCliente}")
-    public void updateCliente(@PathVariable("idCliente") Long idCliente,
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String cpf,
-            @RequestParam(required = false) String email) {
-        clienteService.updateCliente(idCliente, nome, cpf, email);
+    @PostMapping("/edit")
+    public String updateCliente(@RequestParam Long id, @Valid @ModelAttribute("clienteDto") ClienteDTO clienteDto,
+            BindingResult result,
+            Model model) {
+        Cliente cliente = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
+        if (result.hasErrors()) {
+            return "/clientes/update-cliente";
+        }
+        cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
+        clienteDto.getEmail(), null, null);
+
+        cliente.setId(id);
+        repo.save(cliente);
+        return "redirect:/clientes";
     }
 
-    // conecta animal ao dono
-    @PutMapping(path = "{idCliente}/animal/{idAnimal}")
-    public void conectaAnimalaCliente(@PathVariable Long idCliente,
-            @PathVariable Long idAnimal) {
-        clienteService.conectaAnimalaCliente(idCliente, idAnimal);
+    @GetMapping("/delete/{id}")
+    public String deleteCliente(@PathVariable("id") Long id, Model model) {
+        Cliente cliente = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
+        repo.delete(cliente);
+        return "redirect:/clientes";
     }
+
+    /// TODO conectar animal ao dono
+    /// Adiciona animal ao dono usando o CPF do dono (nova coluna na tabela
+    /// cliente_animal)
+    /// Procura animais por clientes: procura na tabela cliente_animal pelos IDs dos
+    /// animais
+    /// procura na tabela animais os dados dos animais com respectivos IDs
 
 }
