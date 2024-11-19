@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,20 +28,16 @@ public class Administrador {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // número sequancial 1, 2, 3...
     private Long id; // Primary Key
 
-    @NotBlank(message = "Nome é obrigatório.")
+    @Column(nullable = false)
     private String nome;
 
-    @NotNull(message = "Data de nascimento é obrigatória.")
-    @Past(message = "Data de nascimento inválida.")
-    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
     private LocalDate dataNasc;
 
-    @NotBlank(message = "Cpf é obrigatório.")
+    @Column(unique = true, nullable = false)
     private String cpf;
 
-    @NotBlank(message = "Email é obrigatório.")
-    @Email(message = "Email inválido.")
+    @Column(unique = true, nullable = false)
     private String email;
 
     // Construtores

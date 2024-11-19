@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import petmania.petmania.dto.DoutorDTO;
 import petmania.petmania.model.Doutor;
 import petmania.petmania.repository.DoutorRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +22,22 @@ public class DoutorController {
 
     @Autowired
     private DoutorRepository repo;
-
     @GetMapping("/signup")
-    public String mostraFormularioSignUp(Doutor doutor) {
+    public String mostraFormularioSignUp(Model model) {
+        DoutorDTO doutorDto = new DoutorDTO();
+        model.addAttribute("doutorDto", doutorDto);
         return "/doutores/add-doutor";
     }
 
     @PostMapping("/adddoutor")
-    public String addDoutor(@Valid Doutor doutor, BindingResult result, Model model) {
+    public String addDoutor(@Valid DoutorDTO doutorDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "/doutores/add-doutor";
         }
+
+        Doutor doutor = new Doutor(doutorDto.getNome(), doutorDto.getDataNasc(), doutorDto.getCpf(),
+                doutorDto.getEmail(), doutorDto.getEspecialidade(), null);
+
         repo.save(doutor);
         return "redirect:/doutores";
     }
@@ -52,10 +58,12 @@ public class DoutorController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateDoutor(@PathVariable("id") Long id, @Valid Doutor doutor, BindingResult result, Model model) {
+    public String updateDoutor(@PathVariable("id") Long id, @Valid DoutorDTO doutorDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "/doutores/update-doutor";
         }
+        Doutor doutor = new Doutor(doutorDto.getNome(), doutorDto.getDataNasc(), doutorDto.getCpf(),
+                doutorDto.getEmail(), doutorDto.getEspecialidade(), null);
         doutor.setIdDoutor(id);
         repo.save(doutor);
         return "redirect:/doutores";
@@ -68,5 +76,4 @@ public class DoutorController {
         repo.delete(doutor);
         return "redirect:/doutores";
     }
-
 }

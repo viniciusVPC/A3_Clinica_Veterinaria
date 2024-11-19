@@ -16,27 +16,27 @@
     <form
       action="#"
       th:action="@{/clientes/addcliente}"
-      th:object="${cliente}"
+      th:object="${clienteDto}"
       method="post"
     >
       <label for="nome">Nome</label>
       <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" />
-      <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      <span th:if="${#fields.hasErrors('nome')}" th:errors="${clienteDto.nome}"></span>
 
       <label for="dataNasc">Data de Nascimento</label>
       <input type="date" th:field="*{dataNasc}" id="dataNasc" />
       <span
         th:if="${#fields.hasErrors('dataNasc')}"
-        th:errors="*{dataNasc}"
+        th:errors="${clienteDto.dataNasc}"
       ></span>
 
       <label for="cpf">Cpf</label>
       <input type="text" th:field="*{cpf}" id="cpf" placeholder="Cpf" />
-      <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+      <span th:if="${#fields.hasErrors('cpf')}" th:errors="${clienteDto.cpf}"></span>
 
       <label for="email">Email</label>
       <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      <span th:if="${#fields.hasErrors('email')}" th:errors="${clienteDto.email}"></span>
 
       <input type="submit" value="Add Cliente" />
     </form>

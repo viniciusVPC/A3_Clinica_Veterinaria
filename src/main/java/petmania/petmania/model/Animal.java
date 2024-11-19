@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 //responsáveis por trabalhar em conjunto com o MySQL
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,13 +33,22 @@ public class Animal {
     @Id // indica que este atributo é uma PK
     @GeneratedValue(strategy = GenerationType.IDENTITY) // número sequancial 1, 2, 3...
     private Long id; // primary key
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private LocalDate dataNasc;
+
     // atributo idade não aparece na TABLE, é calculada automaticamente e exibida no
     // GET da api
     @Transient
     private int idade;
+
+    @Column(nullable = false)
     private String especie;
+
+    @Column(nullable = false)
     private String raca;
 
     @JsonIgnore

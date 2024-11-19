@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import petmania.petmania.dto.AdministradorDTO;
 import petmania.petmania.model.Administrador;
 import petmania.petmania.repository.AdministradorRepository;
 
@@ -26,12 +27,14 @@ public class AdministradorController {
     public String mostraFormularioSignUp(Administrador admin) {
         return "/admins/add-admin";
     }
-
     @PostMapping("/addadmin")
-    public String addAdmin(@Valid Administrador admin, BindingResult result, Model model) {
+    public String addAdmin(@Valid AdministradorDTO adminDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "/admins/add-admin";
         }
+        Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
+                adminDto.getEmail());
+
         repo.save(admin);
         return "redirect:/admins";
     }
@@ -52,11 +55,13 @@ public class AdministradorController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateAdmin(@PathVariable("id") Long id, @Valid Administrador admin, BindingResult result,
+    public String updateAdmin(@PathVariable("id") Long id, @Valid AdministradorDTO adminDto, BindingResult result,
             Model model) {
         if (result.hasErrors()) {
             return "/admins/update-admin";
         }
+        Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
+                adminDto.getEmail());
         admin.setId(id);
         repo.save(admin);
         return "redirect:/admins";
