@@ -37,9 +37,7 @@
               <td th:text="${doutor.email}"></td>
               <td th:text="${doutor.especialidade}"></td>
               <td>
-                <a th:href="@{/doutores/edit/{id}(id=${doutor.idDoutor})}"
-                  >Editar</a
-                >
+                <a th:href="@{/doutores/edit(id=${doutor.idDoutor})}">Editar</a>
               </td>
               <td>
                 <a th:href="@{/doutores/delete/{id}(id=${doutor.idDoutor})}"
@@ -55,6 +53,7 @@
           >Adicione um novo doutor</a
         >
       </p>
+      <p><a class="btn btn-secondary" href="/">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

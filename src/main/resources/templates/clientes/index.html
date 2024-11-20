@@ -37,9 +37,7 @@
               <td th:text="${cliente.cpf}"></td>
               <td th:text="${cliente.email}"></td>
               <td>
-                <a th:href="@{/clientes/{id}/animais(id=${cliente.id})}"
-                  >Animais</a
-                >
+                <a th:href="@{/clientes/animais(id=${cliente.id})}">Animais</a>
               </td>
               <td>
                 <a th:href="@{/clientes/{id}/consultas(id=${cliente.id})}"
@@ -63,6 +61,7 @@
           >Adicione um novo cliente</a
         >
       </p>
+      <p><a class="btn btn-secondary" href="/">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

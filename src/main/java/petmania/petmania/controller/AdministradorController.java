@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import petmania.petmania.dto.AdministradorDTO;
@@ -24,14 +26,20 @@ public class AdministradorController {
     private AdministradorRepository repo;
 
     @GetMapping("/signup")
-    public String mostraFormularioSignUp(Administrador admin) {
+    public String mostraFormularioSignUp(Model model) {
+        AdministradorDTO adminDTO = new AdministradorDTO();
+        model.addAttribute("administradorDto", adminDTO);
         return "/admins/add-admin";
     }
+
     @PostMapping("/addadmin")
-    public String addAdmin(@Valid AdministradorDTO adminDto, BindingResult result, Model model) {
+    public String addAdmin(@Valid @ModelAttribute("administradorDto") AdministradorDTO adminDto, BindingResult result,
+            Model model) {
+
         if (result.hasErrors()) {
             return "/admins/add-admin";
         }
+
         Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
                 adminDto.getEmail());
 
@@ -46,21 +54,28 @@ public class AdministradorController {
         return "/admins/index";
     }
 
-    @GetMapping("/edit/{id}")
-    public String mostraFormularioUpdate(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/edit")
+    public String mostraFormularioUpdate(@RequestParam Long id, Model model) {
         Administrador admin = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
+        AdministradorDTO adminDto = new AdministradorDTO(admin.getNome(), admin.getDataNasc(), admin.getCpf(),
+                admin.getEmail());
         model.addAttribute("admin", admin);
+        model.addAttribute("administradorDto", adminDto);
         return "/admins/update-admin";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateAdmin(@PathVariable("id") Long id, @Valid AdministradorDTO adminDto, BindingResult result,
+    @PostMapping("/edit")
+    public String updateAdmin(@RequestParam Long id,
+            @Valid @ModelAttribute("AdministradorDto") AdministradorDTO adminDto, BindingResult result,
             Model model) {
+        Administrador admin = repo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
         if (result.hasErrors()) {
             return "/admins/update-admin";
         }
-        Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
+
+        admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
                 adminDto.getEmail());
         admin.setId(id);
         repo.save(admin);

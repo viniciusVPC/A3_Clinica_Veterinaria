@@ -1,58 +1,129 @@
 //Cuida da camada de API
 package petmania.petmania.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import petmania.petmania.dto.AnimalDTO;
 import petmania.petmania.model.Animal;
+import petmania.petmania.model.Cliente;
+import petmania.petmania.repository.AnimalRepository;
+import petmania.petmania.repository.ClienteRepository;
 import petmania.petmania.service.AnimalService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-@RestController
-@RequestMapping(path = "api/v1/animal")
+@Controller
+@RequestMapping("/clientes/animais")
 public class AnimalController {
 
     @Autowired
-    private AnimalService animalService;
+    private AnimalRepository repo;
+    @Autowired
+    private ClienteRepository donoRepo;
 
-    public AnimalController(AnimalService animalService) {
-        this.animalService = animalService;
+    @GetMapping("/signup")
+    public String mostraFormularioSignUp(Model model, @RequestParam Long id) {
+
+        Cliente dono = donoRepo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + id + " não existe."));
+
+        AnimalDTO animalDto = new AnimalDTO();
+        model.addAttribute("animalDto", animalDto);
+        model.addAttribute("cliente", dono);
+        return "/clientes/animais/add-animal";
     }
 
-    // função GET da api
-    @GetMapping
-    public List<Animal> getAnimais() {
-        return animalService.getAnimais();
+    @PostMapping("/addanimal")
+    public String addAnimal(@Valid @ModelAttribute("animalDto") AnimalDTO animalDto, @RequestParam Long id,
+            BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            return "/clientes/animais/add-animal";
+        }
+
+        Cliente dono = donoRepo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + id + " não existe."));
+
+        Animal animal = new Animal(animalDto.getNome(), animalDto.getDataNasc(),
+                animalDto.getEspecie(), animalDto.getRaca());
+
+        Set<Animal> pets = dono.getPets();
+        pets.add(animal);
+        dono.setPets(pets);
+
+        model.addAttribute("cliente", dono);
+        repo.save(animal);
+        return String.format("redirect:/clientes/animais?id=%d", id);
     }
 
-    // função POST da api
-    @PostMapping
-    // RequestBody mapeia automaticamente o objeto Animal do BODY do POST da api
-    public void registraNovoAnimal(@RequestBody Animal animal) {
-        animalService.addNewAnimal(animal);
+    @GetMapping({ "", "/" })
+    public String mostraListaAnimais(Model model, @RequestParam Long id) {
+
+        Cliente dono = donoRepo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + id + " não existe."));
+
+        var animais = repo.findAll();
+        model.addAttribute("animais", animais);
+        model.addAttribute("cliente", dono);
+        return "/clientes/animais/index";
     }
 
-    // função DELETE da api
-    @DeleteMapping(path = "{idAnimal}")
-    public void deleteAnimal(@PathVariable("idAnimal") Long idAnimal) {
-        animalService.deleteAnimal(idAnimal);
+    @GetMapping("/edit")
+    public String mostraFormularioUpdate(@RequestParam Long idAnimal, @RequestParam Long idDono, Model model) {
+        Animal animal = repo.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe."));
+        AnimalDTO animalDto = new AnimalDTO(animal.getNome(), animal.getDataNasc(), animal.getEspecie(),
+                animal.getRaca());
+        model.addAttribute("animal", animal);
+        model.addAttribute("animalDto", animalDto);
+        return "/clientes/animais/update-animal";
     }
 
-    // função PUT da api
-    @PutMapping(path = "{idAnimal}")
-    public void updateAnimal(@PathVariable("idAnimal") Long idAnimal,
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String raca) {
-        animalService.updateAnimal(idAnimal, nome, raca);
+    @PostMapping("/edit")
+    public String updateAnimal(@RequestParam Long idAnimal, @RequestParam Long idDono,
+            @Valid @ModelAttribute("animalDto") AnimalDTO animalDto,
+            BindingResult result, Model model) {
+        Animal animal = repo.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe."));
+        if (result.hasErrors()) {
+            return "/clientes/animais/update-animal";
+        }
+        animal = new Animal(animalDto.getNome(), animalDto.getDataNasc(), animalDto.getEspecie(), animalDto.getRaca());
+        animal.setId(idAnimal);
+        repo.save(animal);
+        return String.format("redirect:/clientes/animais?id=%d", idDono);
     }
+
+    @GetMapping("/delete")
+    public String deleteAnimal(@RequestParam Long idDono, @RequestParam Long idAnimal, Model model) {
+        Animal animal = repo.findById(idAnimal)
+                .orElseThrow(() -> new IllegalStateException("Animal com id " + idAnimal + " não existe."));
+        Cliente dono = donoRepo.findById(idDono)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + idDono + " não existe."));
+        Set<Animal> pets = dono.getPets();
+        pets.remove(animal);
+        dono.setPets(pets);
+        repo.delete(animal);
+        return String.format("redirect:/clientes/animais?id=%d", idDono);
+    }
+
 }

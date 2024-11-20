@@ -21,7 +21,10 @@
     >
       <label for="nome">Nome</label>
       <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" />
-      <span th:if="${#fields.hasErrors('nome')}" th:errors="${clienteDto.nome}"></span>
+      <span
+        th:if="${#fields.hasErrors('nome')}"
+        th:errors="${clienteDto.nome}"
+      ></span>
 
       <label for="dataNasc">Data de Nascimento</label>
       <input type="date" th:field="*{dataNasc}" id="dataNasc" />
@@ -32,11 +35,17 @@
 
       <label for="cpf">Cpf</label>
       <input type="text" th:field="*{cpf}" id="cpf" placeholder="Cpf" />
-      <span th:if="${#fields.hasErrors('cpf')}" th:errors="${clienteDto.cpf}"></span>
+      <span
+        th:if="${#fields.hasErrors('cpf')}"
+        th:errors="${clienteDto.cpf}"
+      ></span>
 
       <label for="email">Email</label>
       <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-      <span th:if="${#fields.hasErrors('email')}" th:errors="${clienteDto.email}"></span>
+      <span
+        th:if="${#fields.hasErrors('email')}"
+        th:errors="${clienteDto.email}"
+      ></span>
 
       <input type="submit" value="Add Cliente" />
     </form>

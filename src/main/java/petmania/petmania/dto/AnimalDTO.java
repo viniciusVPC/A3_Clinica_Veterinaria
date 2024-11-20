@@ -1,25 +1,41 @@
 package petmania.petmania.dto;
 
 import java.time.LocalDate;
+import java.time.Period;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnimalDTO {
-    @NotEmpty(message = "Nome é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
-    @NotEmpty(message = "Data de nascimento é obrigatória")
+    @NotNull(message = "Data de nascimento é obrigatória.")
     @Past(message = "Data de nascimento inválida")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNasc;
 
-    @NotEmpty(message = "Espécie é obrigatória")
+    @NotBlank(message = "Espécie é obrigatória")
     String especie;
 
-    @NotEmpty(message = "Raça é obrigatória")
+    @NotBlank(message = "Raça é obrigatória")
     String raca;
+
+    // Funções
+    public int getIdade() {
+        return Period.between(this.dataNasc, LocalDate.now()).getYears();
+    }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/clientes")
@@ -46,6 +47,7 @@ public class ClienteController {
         repo.save(cliente);
         return "redirect:/clientes";
     }
+
     @GetMapping({ "", "/" })
     public String mostraListaClientes(Model model) {
         var clientes = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
@@ -66,15 +68,15 @@ public class ClienteController {
 
     @PostMapping("/edit")
     public String updateCliente(@RequestParam Long id, @Valid @ModelAttribute("clienteDto") ClienteDTO clienteDto,
-            BindingResult result,
-            Model model) {
+            BindingResult result, Model model) {
         Cliente cliente = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
         if (result.hasErrors()) {
             return "/clientes/update-cliente";
         }
+
         cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
-        clienteDto.getEmail(), null, null);
+                clienteDto.getEmail(), null, null);
         cliente.setId(id);
         repo.save(cliente);
         return "redirect:/clientes";

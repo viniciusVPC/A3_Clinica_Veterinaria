@@ -13,30 +13,53 @@
   </head>
 
   <body>
-    <form
-      action="#"
-      th:action="@{/admins/update/{id}(id=${admin.id})}"
-      th:object="${admin}"
-      method="post"
-    >
+    <form action="#" th:object="${administradorDto}" method="post">
       <label for="nome">Nome</label>
-      <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" />
-      <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      <input
+        type="text"
+        th:field="${administradorDto.nome}"
+        id="nome"
+        placeholder="Nome"
+      />
+      <span
+        th:if="${#fields.hasErrors('nome')}"
+        th:errors="${administradorDto.nome}"
+      ></span>
 
       <label for="dataNasc">Data de Nascimento</label>
-      <input type="date" th:field="*{dataNasc}" id="dataNasc" />
+      <input
+        type="date"
+        th:field="${administradorDto.dataNasc}"
+        id="dataNasc"
+      />
       <span
         th:if="${#fields.hasErrors('dataNasc')}"
-        th:errors="*{dataNasc}"
+        th:errors="${administradorDto.dataNasc}"
       ></span>
 
       <label for="cpf">Cpf</label>
-      <input type="text" th:field="*{cpf}" id="cpf" placeholder="Cpf" />
-      <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+      <input
+        type="text"
+        th:field="${administradorDto.cpf}"
+        id="cpf"
+        placeholder="Cpf"
+      />
+      <span
+        th:if="${#fields.hasErrors('cpf')}"
+        th:errors="${administradorDto.cpf}"
+      ></span>
 
       <label for="email">Email</label>
-      <input type="text" th:field="*{email}" id="email" placeholder="Email" />
-      <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+      <input
+        type="text"
+        th:field="${administradorDto.email}"
+        id="email"
+        placeholder="Email"
+      />
+      <span
+        th:if="${#fields.hasErrors('email')}"
+        th:errors="${administradorDto.email}"
+      ></span>
 
       <input type="submit" value="Update Admin" />
     </form>

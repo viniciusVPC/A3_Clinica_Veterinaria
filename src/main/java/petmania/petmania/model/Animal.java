@@ -42,8 +42,10 @@ public class Animal {
 
     // atributo idade não aparece na TABLE, é calculada automaticamente e exibida no
     // GET da api
-    @Transient
-    private int idade;
+    /*
+     * @Transient
+     * private int idade;
+     */
 
     @Column(nullable = false)
     private String especie;
@@ -72,24 +74,21 @@ public class Animal {
     }
 
     // constutor sem o Id
-    public Animal(String nome, LocalDate dataNasc, int idade, String especie, String raca, Set<Cliente> donos,
-            Set<Consulta> consultas) {
+    public Animal(String nome, LocalDate dataNasc, String especie, String raca) {
         this.nome = nome;
         this.dataNasc = dataNasc;
-        this.idade = idade;
+        /* this.idade = idade; */
         this.especie = especie;
         this.raca = raca;
-        this.donos = donos;
-        this.consultas = consultas;
     }
 
     // construtor com todos os atributos
-    public Animal(Long id, String nome, LocalDate dataNasc, int idade, String especie, String raca, Set<Cliente> donos,
+    public Animal(Long id, String nome, LocalDate dataNasc, String especie, String raca, Set<Cliente> donos,
             Set<Consulta> consultas) {
         this.id = id;
         this.nome = nome;
         this.dataNasc = dataNasc;
-        this.idade = idade;
+        /* this.idade = idade; */
         this.especie = especie;
         this.raca = raca;
         this.donos = donos;
