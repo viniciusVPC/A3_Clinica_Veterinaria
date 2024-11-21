@@ -36,6 +36,8 @@ public class DoutorController {
     public String addDoutor(@Valid @ModelAttribute("doutorDto") DoutorDTO doutorDto, BindingResult result,
             Model model) {
 
+        // TODO verificar data maior que 18 anos
+
         if (result.hasErrors()) {
             return "/doutores/add-doutor";
         }

@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,6 @@ public class DoutorDTO {
 
     @NotNull(message = "Data de nascimento é obrigatória.")
     @Past(message = "Data de nascimento inválida.")
-    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNasc;
 
