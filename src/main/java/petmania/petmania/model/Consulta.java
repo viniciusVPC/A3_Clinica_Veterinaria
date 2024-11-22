@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 /* import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne; */
 //responsáveis por criar getters, setters e um construtor
@@ -47,19 +48,25 @@ public class Consulta {
     public Consulta() {
     }
 
-    // Construtor sem o id
-    public Consulta(String tipo, LocalDateTime horario, Integer duracaoEmMinutos) {
+    public Consulta(Cliente cliente, Animal animal, Doutor doutor, String tipo, LocalDateTime horario,
+            Integer duracaoEmMinutos) {
+        this.cliente = cliente;
+        this.animal = animal;
+        this.doutor = doutor;
         this.tipo = tipo;
         this.horario = horario;
         this.duracaoEmMinutos = duracaoEmMinutos;
     }
 
-    // Construtor com todos os atributos
-    public Consulta(Long idConsulta, Long idAnimal, Long idCliente, String tipo, LocalDateTime horario,
+    public Consulta(Long idConsulta, Cliente cliente, Animal animal, Doutor doutor, String tipo, LocalDateTime horario,
             Integer duracaoEmMinutos) {
         this.idConsulta = idConsulta;
+        this.cliente = cliente;
+        this.animal = animal;
+        this.doutor = doutor;
         this.tipo = tipo;
         this.horario = horario;
         this.duracaoEmMinutos = duracaoEmMinutos;
     }
+
 }

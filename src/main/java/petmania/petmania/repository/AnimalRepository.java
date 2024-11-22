@@ -24,4 +24,5 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     @Query(value = "SELECT a.* FROM animal a INNER JOIN cliente_animal ca ON ca.id_animal = a.id WHERE ca.id_cliente = ?1", nativeQuery = true)
     List<Animal> getAnimalByDono(Long idDono);
+
 }
