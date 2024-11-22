@@ -61,6 +61,18 @@
         th:errors="${administradorDto.email}"
       ></span>
 
+      <label for="senha">Senha</label>
+      <input
+        type="password"
+        th:field="${administradorDto.senha}"
+        id="senha"
+        placeholder="Senha"
+      />
+      <span
+        th:if="${#fields.hasErrors('senha')}"
+        th:errors="${administradorDto.senha}"
+      ></span>
+
       <input type="submit" value="Update Admin" />
     </form>
     <script

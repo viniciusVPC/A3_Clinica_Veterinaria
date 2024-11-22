@@ -33,26 +33,31 @@ public class Administrador {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String senha;
+
     // Construtores
     // Construtor vazio
     public Administrador() {
     }
 
     // Construtor sem o id
-    public Administrador(String nome, LocalDate dataNasc, String cpf, String email) {
+    public Administrador(String nome, LocalDate dataNasc, String cpf, String email, String senha) {
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.email = email;
+        this.senha = senha;
     }
 
     // Construtor com todos os atributos
-    public Administrador(Long id, String nome, LocalDate dataNasc, String cpf, String email) {
+    public Administrador(Long id, String nome, LocalDate dataNasc, String cpf, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.cpf = cpf;
         this.email = email;
+        this.senha = senha;
     }
 
 }

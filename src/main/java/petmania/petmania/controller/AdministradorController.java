@@ -41,7 +41,7 @@ public class AdministradorController {
         }
 
         Administrador admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
-                adminDto.getEmail());
+                adminDto.getEmail(), adminDto.getSenha());
 
         repo.save(admin);
         return "redirect:/admins";
@@ -59,7 +59,7 @@ public class AdministradorController {
         Administrador admin = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
         AdministradorDTO adminDto = new AdministradorDTO(admin.getNome(), admin.getDataNasc(), admin.getCpf(),
-                admin.getEmail());
+                admin.getEmail(), admin.getSenha());
         model.addAttribute("admin", admin);
         model.addAttribute("administradorDto", adminDto);
         return "/admins/update-admin";
@@ -76,7 +76,7 @@ public class AdministradorController {
         }
 
         admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(),
-                adminDto.getEmail());
+                adminDto.getEmail(), adminDto.getSenha());
         admin.setId(id);
         repo.save(admin);
         return "redirect:/admins";
