@@ -19,9 +19,6 @@ public class AdministradorController {
     @Autowired
     private AdministradorRepository repo;
 
-    @Autowired
-    private AuthenticationController authController;
-
     @GetMapping("/signup")
     public String mostraFormularioSignUp(Model model) {
         AdministradorDTO adminDTO = new AdministradorDTO();
@@ -30,19 +27,6 @@ public class AdministradorController {
     }
 
     // ADD ADMIN é Controlado pela classe AuthenticationController
-    /*
-     * @PostMapping("/addadmin")
-     * public String addAdmin(@Valid @ModelAttribute("administradorDto")
-     * AdministradorDTO adminDto, BindingResult result,
-     * Model model) {
-     * // TODO CPF e senha únicos
-     * if (result.hasErrors()) {
-     * return "/admins/add-admin";
-     * }
-     * model.addAttribute("administradorDto", adminDTO);
-     * return "/auth/register";
-     * }
-     */
 
     @GetMapping({ "", "/" })
     public String mostraListaAdmins(Model model) {
@@ -50,44 +34,6 @@ public class AdministradorController {
         model.addAttribute("admins", admins);
         return "/admins/index";
     }
-
-    /*
-     * @GetMapping("/edit")
-     * public String mostraFormularioUpdate(@RequestParam Long id, Model model) {
-     * Administrador admin = repo.findById(id)
-     * .orElseThrow(() -> new IllegalStateException("Administrador com id " + id +
-     * " não existe."));
-     * AdministradorDTO adminDto = new AdministradorDTO(admin.getNome(),
-     * admin.getDataNasc(), admin.getCpf(),
-     * admin.getEmail(), admin.getSenha());
-     * model.addAttribute("admin", admin);
-     * model.addAttribute("administradorDto", adminDto);
-     * return "/admins/update-admin";
-     * }
-     */
-
-    /*
-     * @PostMapping("/edit")
-     * public String updateAdmin(@RequestParam Long id,
-     * 
-     * @Valid @ModelAttribute("AdministradorDto") AdministradorDTO adminDto,
-     * BindingResult result,
-     * Model model) {
-     * Administrador admin = repo.findById(id)
-     * .orElseThrow(() -> new IllegalStateException("Administrador com id " + id +
-     * " não existe."));
-     * if (result.hasErrors()) {
-     * return "/admins/update-admin";
-     * }
-     * 
-     * admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(),
-     * adminDto.getCpf(),
-     * adminDto.getEmail(), adminDto.getSenha());
-     * admin.setId(id);
-     * repo.save(admin);
-     * return "redirect:/admins";
-     * }
-     */
 
     @GetMapping("/delete/{id}")
     public String deleteAdmin(@PathVariable("id") Long id, Model model) {
