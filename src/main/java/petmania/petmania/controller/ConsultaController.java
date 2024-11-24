@@ -122,9 +122,11 @@ public class ConsultaController {
     @PostMapping("edit")
     public String updateConsulta(@RequestParam Long id, @Valid @ModelAttribute("consultaDto") ConsultaDTO consultaDto,
             BindingResult result, Model model) {
+
         if (result.hasErrors()) {
             return "consultas/update-consulta";
         }
+
         Consulta consulta = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Consulta com id " + id + " não existe."));
 
@@ -137,7 +139,8 @@ public class ConsultaController {
         var pets = animalRepo.getAnimalByDono(cliente.getId());
         Animal animal = null;
         for (Animal pet : pets) {
-            if (pet.getNome() == consultaDto.getNomeAnimal())
+            System.out.println(pet.getNome());
+            if (pet.getNome().equals(consultaDto.getNomeAnimal()))
                 animal = pet;
         }
         if (animal == null)
