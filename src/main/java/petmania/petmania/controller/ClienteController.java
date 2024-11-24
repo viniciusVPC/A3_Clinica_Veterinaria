@@ -51,7 +51,10 @@ public class ClienteController {
     @GetMapping({ "", "/" })
     public String mostraListaClientes(Model model) {
         var clientes = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
-        model.addAttribute("clientes", clientes);
+        if (clientes.isEmpty())
+            model.addAttribute("clientes", null);
+        else
+            model.addAttribute("clientes", clientes);
         return "/clientes/index";
     }
 

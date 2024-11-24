@@ -13,55 +13,69 @@
   </head>
 
   <body>
-    <div class="container my-3" th:switch="${clientes}">
-      <h2 class="text-center mb-3" th:case="null">Ainda não tem clientes!</h2>
-      <div th:case="*">
-        <h2 class="text-center mb-3">Clientes:</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Data de Nascimento</th>
-              <th>Cpf</th>
-              <th>Email</th>
-              <th>Animais</th>
-              <th>Consultas</th>
-              <th>Editar</th>
-              <th>Deletar</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr th:each="cliente : ${clientes}">
-              <td th:text="${cliente.nome}"></td>
-              <td th:text="${cliente.dataNasc}"></td>
-              <td th:text="${cliente.cpf}"></td>
-              <td th:text="${cliente.email}"></td>
-              <td>
-                <a th:href="@{/clientes/animais(id=${cliente.id})}">Animais</a>
-              </td>
-              <td>
-                <a th:href="@{/clientes/{id}/consultas(id=${cliente.id})}"
-                  >Consultas</a
-                >
-              </td>
-              <td>
-                <a th:href="@{/clientes/edit(id=${cliente.id})}">Editar</a>
-              </td>
-              <td>
-                <a th:href="@{/clientes/delete/{id}(id=${cliente.id})}"
-                  >Deletar</a
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="container my-5" th:switch="${clientes}">
+      <div class="row justify-content-center">
+        <div class="col-md-auto">
+          <div th:if="${clientes == null}">
+            <h2 class="text-center mb-3" th:case="null">
+              Ainda não tem clientes!
+            </h2>
+          </div>
+
+          <div th:if="${clientes}">
+            <h2 class="text-center mb-3">Clientes:</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Data de Nascimento</th>
+                  <th>Cpf</th>
+                  <th>Email</th>
+                  <th>Animais</th>
+                  <th>Consultas</th>
+                  <th>Editar</th>
+                  <th>Deletar</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr th:each="cliente : ${clientes}">
+                  <td th:text="${cliente.nome}"></td>
+                  <td th:text="${cliente.dataNasc}"></td>
+                  <td th:text="${cliente.cpf}"></td>
+                  <td th:text="${cliente.email}"></td>
+                  <td>
+                    <a th:href="@{/clientes/animais(id=${cliente.id})}"
+                      >Animais</a
+                    >
+                  </td>
+                  <td>
+                    <a th:href="@{/consultas/cliente(idCliente=${cliente.id})}"
+                      >Consultas</a
+                    >
+                  </td>
+                  <td>
+                    <a th:href="@{/clientes/edit(id=${cliente.id})}">Editar</a>
+                  </td>
+                  <td>
+                    <a th:href="@{/clientes/delete/{id}(id=${cliente.id})}"
+                      >Deletar</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br />
+
+          <div class="mb-3">
+            <a class="btn btn-primary" href="/clientes/signup"
+              >Adicione um novo cliente</a
+            >
+            <a class="btn btn-secondary" href="/home">Menu</a>
+          </div>
+        </div>
       </div>
-      <p>
-        <a class="btn btn-primary" href="/clientes/signup"
-          >Adicione um novo cliente</a
-        >
-      </p>
-      <p><a class="btn btn-secondary" href="/home">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

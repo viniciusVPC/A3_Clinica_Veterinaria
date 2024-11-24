@@ -40,8 +40,9 @@ public class ConsultaController {
     private AnimalRepository animalRepo;
 
     @GetMapping("/create")
-    public String mostraFormularioConsulta(Model model) {
-        ConsultaDTO consultaDTO = new ConsultaDTO();
+    public String mostraFormularioConsulta(Model model, @RequestParam String cpfCliente,
+            @RequestParam String cpfDoutor) {
+        ConsultaDTO consultaDTO = new ConsultaDTO(cpfCliente, cpfDoutor);
         model.addAttribute("consultaDto", consultaDTO);
         return "/consultas/add-consulta";
     }
@@ -104,6 +105,26 @@ public class ConsultaController {
     public String mostraListaConsultas(Model model) {
         var consultas = repo.findAll(Sort.by(Sort.Direction.ASC, "idConsulta"));
         model.addAttribute("consultas", consultas);
+        return "/consultas/index";
+    }
+
+    @GetMapping("/cliente")
+    public String mostraListaConsultasCliente(Model model, @RequestParam Long idCliente) {
+        Cliente cliente = clienteRepo.findById(idCliente)
+                .orElseThrow(() -> new IllegalStateException("Cliente com id " + idCliente + " não encontrado."));
+        var consultas = repo.getConsultasByCliente(idCliente);
+        model.addAttribute("consultas", consultas);
+        model.addAttribute("cliente", cliente);
+        return "/consultas/index";
+    }
+
+    @GetMapping("/doutor")
+    public String mostraListaConsultasDoutor(Model model, @RequestParam Long idDoutor) {
+        Doutor doutor = doutorRepo.findById(idDoutor)
+                .orElseThrow(() -> new IllegalStateException("Doutor com id " + idDoutor + " não encontrado."));
+        var consultas = repo.getConsultasByDoutor(idDoutor);
+        model.addAttribute("consultas", consultas);
+        model.addAttribute("doutor", doutor);
         return "/consultas/index";
     }
 

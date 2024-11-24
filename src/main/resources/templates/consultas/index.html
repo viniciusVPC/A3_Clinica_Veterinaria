@@ -13,54 +13,79 @@
   </head>
 
   <body>
-    <div class="container my-3" th:switch="${consultas}">
-      <h2 class="text-center mb-3" th:case="null">
-        Ainda não há consultas marcadas
-      </h2>
-      <div th:case="*">
-        <h2 class="text-center mb-3">Consultas:</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Cliente</th>
-              <th>Animal</th>
-              <th>Doutor</th>
-              <th>Tipo</th>
-              <th>Horário</th>
-              <th>Duração (em minutos)</th>
-              <th>Editar</th>
-              <th>Deletar</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr th:each="consulta : ${consultas}">
-              <td th:text="${consulta.cliente.nome}"></td>
-              <td th:text="${consulta.animal.nome}"></td>
-              <td th:text="${consulta.doutor.nome}"></td>
-              <td th:text="${consulta.tipo}"></td>
-              <td th:text="${consulta.tipo}"></td>
-              <td th:text="${consulta.duracaoEmMinutos}"></td>
-              <td>
-                <a th:href="@{/consultas/edit(id=${consulta.idConsulta})}"
-                  >Editar</a
-                >
-              </td>
-              <td>
-                <a
-                  th:href="@{/consultas/delete/{id}(id=${consulta.idConsulta})}"
-                  >Deletar</a
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="container my-5" th:switch="${consultas}">
+      <div class="row justify-content-center">
+        <div class="col-md-auto">
+          <div th:if="${consultas == null}">
+            <h2 class="text-center mb-3" th:case="null">
+              Ainda não há consultas marcadas!
+            </h2>
+          </div>
+
+          <div th:if="${consultas}">
+            <h2 class="text-center mb-3">Consultas:</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Animal</th>
+                  <th>Doutor</th>
+                  <th>Tipo</th>
+                  <th>Horário</th>
+                  <th>Duração (em minutos)</th>
+                  <th>Editar</th>
+                  <th>Deletar</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr th:each="consulta : ${consultas}">
+                  <td th:text="${consulta.cliente.nome}"></td>
+                  <td th:text="${consulta.animal.nome}"></td>
+                  <td th:text="${consulta.doutor.nome}"></td>
+                  <td th:text="${consulta.tipo}"></td>
+                  <td th:text="${consulta.tipo}"></td>
+                  <td th:text="${consulta.duracaoEmMinutos}"></td>
+                  <td>
+                    <a th:href="@{/consultas/edit(id=${consulta.idConsulta})}"
+                      >Editar</a
+                    >
+                  </td>
+                  <td>
+                    <a
+                      th:href="@{/consultas/delete/{id}(id=${consulta.idConsulta})}"
+                      >Deletar</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br />
+
+          <div class="mb-3">
+            <a
+              th:if="${cliente}"
+              class="btn btn-primary"
+              th:href="@{/consultas/create(cpfCliente=${cliente.cpf}, cpfDoutor=null)}"
+              >Marque uma nova consulta</a
+            >
+            <a
+              th:if="${doutor}"
+              class="btn btn-primary"
+              th:href="@{/consultas/create(cpfCliente=null, cpfDoutor=${doutor.cpf})}"
+              >Marque uma nova consulta</a
+            >
+            <a
+              th:if="${cliente == null && doutor == null}"
+              class="btn btn-primary"
+              th:href="@{/consultas/create(cpfCliente=null, cpfDoutor=null)}"
+              >Marque uma nova consulta</a
+            >
+            <a class="btn btn-secondary" href="/home">Menu</a>
+          </div>
+        </div>
       </div>
-      <p>
-        <a class="btn btn-primary" href="/consultas/create"
-          >Marque uma nova consulta</a
-        >
-      </p>
-      <p><a class="btn btn-secondary" href="/home">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

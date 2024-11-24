@@ -39,4 +39,9 @@ public class ConsultaDTO {
     @NotNull(message = "Duração da consulta é obrigatória")
     @DecimalMin(value = "5", message = "Duração de consulta inválida")
     private int duracaoEmMinutos;
+
+    public ConsultaDTO(String cpfCliente, String cpfDoutor) {
+        this.cpfCliente = cpfCliente;
+        this.cpfDoutor = cpfDoutor;
+    }
 }

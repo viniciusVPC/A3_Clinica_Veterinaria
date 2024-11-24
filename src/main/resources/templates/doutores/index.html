@@ -13,47 +13,67 @@
   </head>
 
   <body>
-    <div class="container my-3" th:switch="${doutores}">
-      <h2 class="text-center mb-3" th:case="null">Ainda não tem doutores!</h2>
-      <div th:case="*">
-        <h2 class="text-center mb-3">Doutores:</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Data de Nascimento</th>
-              <th>Cpf</th>
-              <th>Email</th>
-              <th>Especialidade</th>
-              <th>Editar</th>
-              <th>Deletar</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr th:each="doutor : ${doutores}">
-              <td th:text="${doutor.nome}"></td>
-              <td th:text="${doutor.dataNasc}"></td>
-              <td th:text="${doutor.cpf}"></td>
-              <td th:text="${doutor.email}"></td>
-              <td th:text="${doutor.especialidade}"></td>
-              <td>
-                <a th:href="@{/doutores/edit(id=${doutor.idDoutor})}">Editar</a>
-              </td>
-              <td>
-                <a th:href="@{/doutores/delete/{id}(id=${doutor.idDoutor})}"
-                  >Deletar</a
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="container my-5" th:switch="${doutores}">
+      <div class="row justify-content-center">
+        <div class="col-md-auto">
+          <div th:if="${doutores == null}">
+            <h2 class="text-center mb-3" th:case="null">
+              Ainda não tem doutores!
+            </h2>
+          </div>
+
+          <div th:if="${doutores}">
+            <h2 class="text-center mb-3">Doutores:</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Data de Nascimento</th>
+                  <th>Cpf</th>
+                  <th>Email</th>
+                  <th>Especialidade</th>
+                  <th>Consultas</th>
+                  <th>Editar</th>
+                  <th>Deletar</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr th:each="doutor : ${doutores}">
+                  <td th:text="${doutor.nome}"></td>
+                  <td th:text="${doutor.dataNasc}"></td>
+                  <td th:text="${doutor.cpf}"></td>
+                  <td th:text="${doutor.email}"></td>
+                  <td th:text="${doutor.especialidade}"></td>
+                  <td>
+                    <a
+                      th:href="@{/consultas/doutor(idDoutor=${doutor.idDoutor})}"
+                      >Consultas</a
+                    >
+                  </td>
+                  <td>
+                    <a th:href="@{/doutores/edit(id=${doutor.idDoutor})}"
+                      >Editar</a
+                    >
+                  </td>
+                  <td>
+                    <a th:href="@{/doutores/delete/{id}(id=${doutor.idDoutor})}"
+                      >Deletar</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br />
+
+          <div class="mb-3">
+            <a class="btn btn-primary" href="/doutores/signup"
+              >Adicione um novo doutor</a
+            >
+            <a class="btn btn-secondary" href="/home">Menu</a>
+          </div>
+        </div>
       </div>
-      <p>
-        <a class="btn btn-primary" href="/doutores/signup"
-          >Adicione um novo doutor</a
-        >
-      </p>
-      <p><a class="btn btn-secondary" href="/home">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

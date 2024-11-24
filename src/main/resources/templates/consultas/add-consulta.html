@@ -13,82 +13,130 @@
   </head>
 
   <body>
-    <form
-      action="#"
-      th:action="@{/consultas/addconsulta}"
-      th:object="${consultaDto}"
-      method="post"
-    >
-      <label for="cpfCliente">CPF do Cliente</label>
-      <input
-        type="text"
-        th:field="*{cpfCliente}"
-        id="cpfCliente"
-        placeholder="CPF do Cliente"
-      />
-      <span
-        th:if="${#fields.hasErrors('cpfCliente')}"
-        th:errors="${consultaDto.cpfCliente}"
-      ></span>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <h1>Marcar Consulta:</h1>
+          <form
+            action="#"
+            th:action="@{/consultas/addconsulta}"
+            th:object="${consultaDto}"
+            method="post"
+          >
+            <div class="mb-3">
+              <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+              <input
+                type="text"
+                th:field="${consultaDto.cpfCliente}"
+                class="form-control"
+                id="cpfCliente"
+                placeholder="CPF do Cliente"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('cpfCliente')}"
+                th:errors="${consultaDto.cpfCliente}"
+              ></span>
+            </div>
 
-      <label for="nomeAnimal">Nome do Pet</label>
-      <input
-        type="text"
-        th:field="*{nomeAnimal}"
-        id="nomeAnimal"
-        placeholder="Nome do Animal"
-      />
-      <span
-        th:if="${#fields.hasErrors('nomeAnimal')}"
-        th:errors="${consultaDto.nomeAnimal}"
-      ></span>
+            <div class="mb-3">
+              <label for="nomeAnimal" class="form-label">Nome do Pet</label>
+              <input
+                type="text"
+                th:field="*{nomeAnimal}"
+                class="form-control"
+                id="nomeAnimal"
+                placeholder="Nome do Animal"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('nomeAnimal')}"
+                th:errors="${consultaDto.nomeAnimal}"
+              ></span>
+            </div>
 
-      <label for="cpfDoutor">CPF do Doutor</label>
-      <input
-        type="text"
-        th:field="*{cpfDoutor}"
-        id="cpfDoutor"
-        placeholder="CPF do Doutor"
-      />
-      <span
-        th:if="${#fields.hasErrors('cpfDoutor')}"
-        th:errors="${consultaDto.cpfDoutor}"
-      ></span>
+            <div class="mb-3">
+              <label for="cpfDoutor" class="form-label">CPF do Doutor</label>
+              <input
+                type="text"
+                th:field="${consultaDto.cpfDoutor}"
+                class="form-control"
+                id="cpfDoutor"
+                placeholder="CPF do Doutor"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('cpfDoutor')}"
+                th:errors="${consultaDto.cpfDoutor}"
+              ></span>
+            </div>
 
-      <label for="tipo">Tipo de Consulta</label>
-      <input type="text" th:field="*{tipo}" id="tipo" placeholder="Tipo" />
-      <span
-        th:if="${#fields.hasErrors('tipo')}"
-        th:errors="${consultaDto.tipo}"
-      ></span>
+            <div class="mb-3">
+              <label for="tipo" class="form-label">Tipo de Consulta</label>
+              <input
+                type="text"
+                th:field="*{tipo}"
+                class="form-control"
+                id="tipo"
+                placeholder="Tipo"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('tipo')}"
+                th:errors="${consultaDto.tipo}"
+              ></span>
+            </div>
 
-      <label for="horario">Data e Horário</label>
-      <input
-        type="datetime-local"
-        th:field="*{horario}"
-        id="horario"
-        placeholder="Horario"
-      />
-      <span
-        th:if="${#fields.hasErrors('horario')}"
-        th:errors="${consultaDto.horario}"
-      ></span>
+            <div class="mb-3">
+              <label for="horario" class="form-label">Data e Horário</label>
+              <input
+                type="datetime-local"
+                th:field="*{horario}"
+                class="form-control"
+                id="horario"
+                placeholder="Horario"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('horario')}"
+                th:errors="${consultaDto.horario}"
+              ></span>
+            </div>
 
-      <label for="duracaoEmMinutos">Duração da consulta (em minutos)</label>
-      <input
-        type="number"
-        step="1"
-        th:field="*{duracaoEmMinutos}"
-        id="duracaoEmMinutos"
-        placeholder="Duração Em Minutos"
-      />
-      <span
-        th:if="${#fields.hasErrors('duracaoEmMinutos')}"
-        th:errors="${consultaDto.duracaoEmMinutos}"
-      ></span>
+            <div class="mb-3">
+              <label for="duracaoEmMinutos" class="form-label"
+                >Duração da consulta (em minutos)</label
+              >
+              <input
+                type="number"
+                step="1"
+                th:field="*{duracaoEmMinutos}"
+                class="form-control"
+                id="duracaoEmMinutos"
+                placeholder="Duração Em Minutos"
+              />
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('duracaoEmMinutos')}"
+                th:errors="${consultaDto.duracaoEmMinutos}"
+              ></span>
+            </div>
+            <br />
+            <div class="mb-3">
+              <input
+                type="submit"
+                class="btn btn-primary"
+                value="Marcar Consulta"
+              />
+              <a class="btn btn-secondary" href="javascript:history.back()"
+                >Voltar</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-      <input type="submit" value="Add Consulta" />
-    </form>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

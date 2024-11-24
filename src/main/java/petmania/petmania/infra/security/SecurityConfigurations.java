@@ -38,6 +38,7 @@ public class SecurityConfigurations {
                 .formLogin(login -> login
                         .loginPage("/auth/login")
                         .failureUrl("/auth/login-error"))
+                .logout((logout) -> logout.logoutSuccessUrl("/"))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();

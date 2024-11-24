@@ -31,7 +31,10 @@ public class AdministradorController {
     @GetMapping({ "", "/" })
     public String mostraListaAdmins(Model model) {
         var admins = repo.findAll(Sort.by(Sort.Direction.ASC, "id"));
-        model.addAttribute("admins", admins);
+        if (admins.isEmpty())
+            model.addAttribute("admins", null);
+        else
+            model.addAttribute("admins", admins);
         return "/admins/index";
     }
 

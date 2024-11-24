@@ -13,53 +13,63 @@
   </head>
 
   <body>
-    <div class="container my-3" th:switch="${animais}">
-      <h2 class="text-center mb-3" th:case="null">
-        Este cliente ainda não tem animais.
-      </h2>
-      <div th:case="*">
-        <h2 class="text-center mb-3">Animais:</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Idade</th>
-              <th>Espécie</th>
-              <th>Raça</th>
-              <th>Editar</th>
-              <th>Deletar</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr th:each="animal : ${animais}">
-              <td th:text="${animal.nome}"></td>
-              <td th:text="${animal.idade}"></td>
-              <td th:text="${animal.especie}"></td>
-              <td th:text="${animal.raca}"></td>
-              <td>
-                <a
-                  th:href="@{/clientes/animais/edit(idDono=${cliente.id}, idAnimal=${animal.id})}"
-                  >Editar</a
-                >
-              </td>
-              <td>
-                <a
-                  th:href="@{/clientes/animais/delete(idDono=${cliente.id}, idAnimal=${animal.id})}"
-                  >Deletar</a
-                >
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="container my-5" th:switch="${animais}">
+      <div class="row justify-content-center">
+        <div class="col-md-auto">
+          <div th:if="${animais == null}">
+            <h2 class="text-center mb-3" th:case="null">
+              Esse cliente ainda não te animais!
+            </h2>
+          </div>
+
+          <div th:if="${animais}">
+            <h2 class="text-center mb-3">Animais:</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Idade</th>
+                  <th>Espécie</th>
+                  <th>Raça</th>
+                  <th>Editar</th>
+                  <th>Deletar</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr th:each="animal : ${animais}">
+                  <td th:text="${animal.nome}"></td>
+                  <td th:text="${animal.idade}"></td>
+                  <td th:text="${animal.especie}"></td>
+                  <td th:text="${animal.raca}"></td>
+                  <td>
+                    <a
+                      th:href="@{/clientes/animais/edit(idDono=${cliente.id}, idAnimal=${animal.id})}"
+                      >Editar</a
+                    >
+                  </td>
+                  <td>
+                    <a
+                      th:href="@{/clientes/animais/delete(idDono=${cliente.id}, idAnimal=${animal.id})}"
+                      >Deletar</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br />
+
+          <div class="mb-3">
+            <a
+              class="btn btn-primary"
+              th:href="@{/clientes/animais/signup(id=${cliente.id})}"
+              >Adicione um novo animal</a
+            >
+            <a class="btn btn-secondary" href="/home">Menu</a>
+          </div>
+        </div>
       </div>
-      <p>
-        <a
-          class="btn btn-primary"
-          th:href="@{/clientes/animais/signup(id=${cliente.id})}"
-          >Adicione um novo animal</a
-        >
-      </p>
-      <p><a class="btn btn-secondary" href="/home">Menu</a></p>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
