@@ -37,7 +37,7 @@
               <td th:text="${admin.cpf}"></td>
               <td th:text="${admin.email}"></td>
               <td>
-                <a th:href="@{/admins/edit(id=${admin.id})}">Editar</a>
+                <a th:href="@{/auth/edit(id=${admin.id})}">Editar</a>
               </td>
               <td>
                 <a th:href="@{/admins/delete/{id}(id=${admin.id})}">Deletar</a>
