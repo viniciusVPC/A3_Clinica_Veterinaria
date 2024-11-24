@@ -15,36 +15,36 @@
   <body>
     <form
       action="#"
-      th:action="@{/admins/addadmin}"
-      th:object="${administradorDto}"
+      th:action="@{/auth/register}"
+      th:object="${adminDto}"
       method="post"
     >
       <label for="nome">Nome</label>
       <input type="text" th:field="*{nome}" id="nome" placeholder="Nome" />
       <span
         th:if="${#fields.hasErrors('nome')}"
-        th:errors="${administradorDto.nome}"
+        th:errors="${adminDto.nome}"
       ></span>
 
       <label for="dataNasc">Data de Nascimento</label>
       <input type="date" th:field="*{dataNasc}" id="dataNasc" />
       <span
         th:if="${#fields.hasErrors('dataNasc')}"
-        th:errors="${administradorDto.dataNasc}"
+        th:errors="${adminDto.dataNasc}"
       ></span>
 
       <label for="cpf">Cpf</label>
       <input type="text" th:field="*{cpf}" id="cpf" placeholder="Cpf" />
       <span
         th:if="${#fields.hasErrors('cpf')}"
-        th:errors="${administradorDto.cpf}"
+        th:errors="${adminDto.cpf}"
       ></span>
 
       <label for="email">Email</label>
       <input type="text" th:field="*{email}" id="email" placeholder="Email" />
       <span
         th:if="${#fields.hasErrors('email')}"
-        th:errors="${administradorDto.email}"
+        th:errors="${adminDto.email}"
       ></span>
 
       <label for="senha">Senha</label>
@@ -56,7 +56,7 @@
       />
       <span
         th:if="${#fields.hasErrors('senha')}"
-        th:errors="${administradorDto.senha}"
+        th:errors="${adminDto.senha}"
       ></span>
 
       <input type="submit" value="Add Admin" />
