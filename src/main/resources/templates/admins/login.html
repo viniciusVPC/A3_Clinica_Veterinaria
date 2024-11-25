@@ -17,9 +17,8 @@
       <div class="row justify-content-center">
         <div class="col-md-4">
           <h1>Login:</h1>
-          <p th:if="${loginError}" class="error">Usuário ou senha inválidos</p>
-
           <form
+            action="#"
             th:action="@{/auth/login}"
             th:object="${authenticationDto}"
             method="post"
@@ -33,6 +32,11 @@
                 name="username"
                 autofocus="autofocus"
               />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('login')}"
+                th:errors="${authenticationDto.login}"
+              ></span>
             </div>
 
             <div class="mb-3">
@@ -43,7 +47,18 @@
                 id="password"
                 name="password"
               />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('password')}"
+                th:errors="${authenticationDto.password}"
+              ></span>
             </div>
+
+            <br />
+
+            <p th:if="${loginError}" class="text-danger">
+              Usuário ou senha inválidos
+            </p>
 
             <br />
 

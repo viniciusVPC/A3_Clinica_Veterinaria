@@ -1,5 +1,8 @@
 package petmania.petmania.controller;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import petmania.petmania.dto.AdministradorDTO;
@@ -72,13 +76,30 @@ public class AuthenticationController {
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("adminDto") AdministradorDTO administradorDto,
             BindingResult result, Model model) {
+        boolean error = false;
         if (result.hasErrors()) {
             return "/admins/add-admin";
         }
 
-        if (this.repo.findByEmail(administradorDto.getEmail()) != null) {
-            return "/admins/add-admin";
+        if (!administradorDto.getDataNasc().isBefore(LocalDate.now().minusYears(18))) {
+            model.addAttribute("errorIdade", "Administradores precisam ser maiores de idade!");
+            error = true;
         }
+
+        Optional<Administrador> adminOptional = repo.findAdminByEmail(administradorDto.getEmail());
+        if (adminOptional.isPresent()) {
+            model.addAttribute("errorEmail", "Já existe um administrador com esse email!");
+            error = true;
+        }
+
+        adminOptional = repo.findAdminByCpf(administradorDto.getCpf());
+        if (adminOptional.isPresent()) {
+            model.addAttribute("errorCPF", "Já existe um administrador com esse CPF!");
+            error = true;
+        }
+
+        if (error)
+            return "/admins/add-admin";
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(administradorDto.getSenha());
         Administrador admin = new Administrador(administradorDto.getNome(), administradorDto.getDataNasc(),
@@ -103,20 +124,50 @@ public class AuthenticationController {
 
     @PostMapping("/edit")
     public String updateAdmin(@RequestParam Long id,
-            @Valid @ModelAttribute("AdministradorDto") AdministradorDTO adminDto, BindingResult result,
+            @Valid @ModelAttribute("administradorDto") AdministradorDTO adminDto, BindingResult result,
             Model model) {
+        boolean error = false;
         Administrador admin = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
+
         if (result.hasErrors()) {
             return "/admins/update-admin";
         }
 
-        if (this.repo.findByEmail(adminDto.getEmail()) != null) {
-            return "/admins/update-admin";
+        if (!adminDto.getDataNasc().isBefore(LocalDate.now().minusYears(18))) {
+            model.addAttribute("errorIdade", "Administradores precisam ser maiores de idade!");
+            error = true;
         }
 
+        Optional<Administrador> adminOptional = repo.findAdminByEmail(adminDto.getEmail());
+        if (adminOptional.isPresent()) {
+            if (adminOptional.get().equals(admin)) {
+                System.out.println("É esse usuário que eu encontrei.");
+            } else {
+                System.out.println("É outro usuário com o mesmo email");
+                model.addAttribute("errorEmail", "Já existe um administrador com esse email!");
+                error = true;
+            }
+
+        }
+
+        adminOptional = repo.findAdminByCpf(adminDto.getCpf());
+        if (adminOptional.isPresent()) {
+            if (adminOptional.get().equals(admin)) {
+                System.out.println("É esse usuário que eu encontrei.");
+            } else {
+                System.out.println("É outro usuário com o mesmo cpf");
+                model.addAttribute("errorCPF", "Já existe um administrador com esse CPF!");
+                error = true;
+            }
+        }
+
+        if (error)
+            return "/admins/update-admin";
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(adminDto.getSenha());
-        admin = new Administrador(null, null, null, adminDto.getEmail(), encryptedPassword,
+        admin = new Administrador(adminDto.getNome(), adminDto.getDataNasc(), adminDto.getCpf(), adminDto.getEmail(),
+                encryptedPassword,
                 UserRole.ADMIN);
         admin.setId(id);
         repo.save(admin);

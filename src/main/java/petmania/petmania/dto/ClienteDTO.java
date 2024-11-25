@@ -35,7 +35,6 @@ public class ClienteDTO {
 
     @NotNull(message = "Data de nascimento é obrigatória.")
     @Past(message = "Data de nascimento inválida.")
-    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNasc;
 

@@ -2,6 +2,7 @@ package petmania.petmania.dto;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Email;
@@ -24,11 +25,11 @@ public class AdministradorDTO {
 
     @NotNull(message = "Data de nascimento é obrigatória.")
     @Past(message = "Data de nascimento inválida.")
-    @IsAfter(current = "1900-01-01", message = "Data de nascimento inválida.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNasc;
 
     @NotBlank(message = "Cpf é obrigatório.")
+    @CPF(message = "Cpf inválido.")
     private String cpf;
 
     @NotBlank(message = "Email é obrigatório.")
