@@ -11,15 +11,17 @@
       crossorigin="anonymous"
     />
   </head>
-  <!-- (id=${cliente.id}) -->
+
+ <!--  <p th:text=""></p> -->
   <body>
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-4">
           <h1>Criar Animal:</h1>
+          
           <form
             action="#"
-            th:action="@{/animais/addanimal(id=${cliente.id})}"
+            th:action="@{/animais/addanimal}"
             th:object="${animalDto}"
             method="post"
           >
@@ -86,6 +88,17 @@
                 th:if="${#fields.hasErrors('raca')}"
                 th:errors="${animalDto.raca}"
               ></span>
+            </div>
+
+            <div class="mb-3" style="display: none !important">
+              <label for="idDono">Id Dono</label>
+              <input
+              type="number"
+              step="1"
+                th:field="${animalDto.idDono}"
+                
+                id="idDono"
+              />
             </div>
 
             <br />
