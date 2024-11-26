@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,56 +31,56 @@ public class AnimalController {
 
     @GetMapping("/signup")
     public String mostraFormularioSignUp(Model model, @RequestParam Long id) {
-
         Cliente dono = donoRepo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Dono com id " + id + " não existe."));
 
-        AnimalDTO animalDto = new AnimalDTO();
-        System.out.println(animalDto);
+        AnimalDTO animalDto = new AnimalDTO(id);
         model.addAttribute("animalDto", animalDto);
-        model.addAttribute("cliente", dono);
+        model.addAttribute("idDono", dono.getId());
         return "/animais/add-animal";
     }
 
-    /* @RequestParam Long id, */
-
+    
+    // @RequestParam Long id,
     @PostMapping("/addanimal")
-    public String addAnimal(@Valid @ModelAttribute("animalDto") AnimalDTO animalDto, @RequestParam Long id,
+    public String addAnimal(@Valid @ModelAttribute("animalDto") AnimalDTO animalDto,
             BindingResult result, Model model) {
         boolean error = false;
-
-        Cliente dono = donoRepo.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Dono com id " + id +
-                        " não existe."));
-
         if (result.hasErrors()) {
-            model.addAttribute("cliente", dono);
+
+            //model.addAttribute("idDono", id);
             model.addAttribute("animalDto", animalDto);
             return "/animais/add-animal";
-        }
 
-        for (Animal pet : dono.getPets()) {
+        }
+        /* Cliente dono = donoRepo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + id +
+                        " não existe.")); */
+
+        Long id = animalDto.getIdDono();
+
+        /* for (Animal pet : dono.getPets()) {
             if (pet.getNome().equals(animalDto.getNome()) && pet.getIdade() == animalDto.getIdade()) {
                 model.addAttribute("errorAnimalRepetido",
                         "Esse cliente parece já ter esse animal.");
                 error = true;
             }
-        }
+        } */
 
         if (error) {
-            model.addAttribute("cliente", dono);
+            //model.addAttribute("idDono", id);
             model.addAttribute("animalDto", animalDto);
-            return "animais/add-animal";
+            return String.format("animais/add-animal?id=%d", 1);
         }
 
         Animal animal = new Animal(animalDto.getNome(), animalDto.getDataNasc(),
                 animalDto.getEspecie(), animalDto.getRaca());
 
-        Set<Animal> pets = dono.getPets();
+        /* Set<Animal> pets = dono.getPets();
         pets.add(animal);
-        dono.setPets(pets);
+        dono.setPets(pets); */
 
-        model.addAttribute("cliente", dono);
+        //model.addAttribute("cliente", dono);
         repo.save(animal);
         return String.format("redirect:/animais?id=%d", id);
     }

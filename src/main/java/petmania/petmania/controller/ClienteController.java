@@ -1,12 +1,6 @@
 // Cuida da camada API
 package petmania.petmania.controller;
 
-import jakarta.validation.Valid;
-import petmania.petmania.dto.ClienteDTO;
-import petmania.petmania.model.Administrador;
-import petmania.petmania.model.Cliente;
-import petmania.petmania.repository.ClienteRepository;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
+import petmania.petmania.dto.ClienteDTO;
+import petmania.petmania.model.Cliente;
+import petmania.petmania.repository.ClienteRepository;
 
 @Controller
 @RequestMapping("/clientes")
