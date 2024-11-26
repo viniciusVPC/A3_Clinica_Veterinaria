@@ -33,56 +33,69 @@
                 placeholder="Nome"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('nome')}"
                 th:errors="${doutorDto.nome}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="dataNasc" class="form-label"
+              <label
+                for="dataNasc"
+                th:class="${errorIdade != null ? 'text-danger' : 'form-label'}"
                 >Data de Nascimento</label
               >
               <input
                 type="date"
                 th:field="*{dataNasc}"
                 class="form-control"
+                th:classappend="${errorIdade != null ? 'is-invalid' : ''}"
                 id="dataNasc"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('dataNasc')}"
                 th:errors="${doutorDto.dataNasc}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="cpf" class="form-label">Cpf</label>
+              <label
+                for="cpf"
+                th:class="${errorCPF != null ? 'text-danger' : 'form-label'}"
+                >Cpf</label
+              >
               <input
                 type="text"
                 th:field="*{cpf}"
                 class="form-control"
+                th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
                 id="cpf"
                 placeholder="Cpf"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('cpf')}"
                 th:errors="${doutorDto.cpf}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label
+                for="email"
+                th:class="${errorEmail != null ? 'text-danger' : 'form-label'}"
+                >Email</label
+              >
               <input
                 type="text"
                 th:field="*{email}"
                 class="form-control"
+                th:classappend="${errorEmail != null ? 'is-invalid' : ''}"
                 id="email"
                 placeholder="Email"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('email')}"
                 th:errors="${doutorDto.email}"
               ></span>
@@ -100,10 +113,24 @@
                 placeholder="Especialidade"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('especialidade')}"
                 th:errors="${doutorDto.especialidade}"
               ></span>
+            </div>
+
+            <br />
+
+            <div th:if="${errorIdade}">
+              <div th:text="${errorIdade}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorCPF}">
+              <div th:text="${errorCPF}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorEmail}">
+              <div th:text="${errorEmail}" class="text-danger"></div>
             </div>
 
             <br />

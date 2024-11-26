@@ -43,13 +43,13 @@
                   <td th:text="${animal.raca}"></td>
                   <td>
                     <a
-                      th:href="@{/clientes/animais/edit(idDono=${cliente.id}, idAnimal=${animal.id})}"
+                      th:href="@{/animais/edit(idDono=${cliente.id}, idAnimal=${animal.id})}"
                       >Editar</a
                     >
                   </td>
                   <td>
                     <a
-                      th:href="@{/clientes/animais/delete(idDono=${cliente.id}, idAnimal=${animal.id})}"
+                      th:href="@{/animais/delete(idDono=${cliente.id}, idAnimal=${animal.id})}"
                       >Deletar</a
                     >
                   </td>
@@ -63,7 +63,7 @@
           <div class="mb-3">
             <a
               class="btn btn-primary"
-              th:href="@{/clientes/animais/signup(id=${cliente.id})}"
+              th:href="@{/animais/signup(id=${cliente.id})}"
               >Adicione um novo animal</a
             >
             <a class="btn btn-secondary" href="/home">Menu</a>

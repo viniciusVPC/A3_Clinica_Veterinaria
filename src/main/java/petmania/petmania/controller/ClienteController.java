@@ -3,8 +3,11 @@ package petmania.petmania.controller;
 
 import jakarta.validation.Valid;
 import petmania.petmania.dto.ClienteDTO;
+import petmania.petmania.model.Administrador;
 import petmania.petmania.model.Cliente;
 import petmania.petmania.repository.ClienteRepository;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -35,11 +38,27 @@ public class ClienteController {
     @PostMapping("/addcliente")
     public String addCliente(@Valid @ModelAttribute("clienteDto") ClienteDTO clienteDto, BindingResult result,
             Model model) {
-        // TODO verificar CPF e EMail únicos
+
+        boolean error = false;
 
         if (result.hasErrors()) {
             return "/clientes/add-cliente";
         }
+
+        Optional<Cliente> clienteOptional = repo.findClienteByEmail(clienteDto.getEmail());
+        if (clienteOptional.isPresent()) {
+            model.addAttribute("errorEmail", "Já existe um cliente com esse email!");
+            error = true;
+        }
+
+        clienteOptional = repo.findClienteByCpf(clienteDto.getCpf());
+        if (clienteOptional.isPresent()) {
+            model.addAttribute("errorCPF", "Já existe um cliente com esse CPF!");
+            error = true;
+        }
+
+        if (error)
+            return "/clientes/add-cliente";
 
         Cliente cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
                 clienteDto.getEmail(), null, null);
@@ -72,11 +91,33 @@ public class ClienteController {
     @PostMapping("/edit")
     public String updateCliente(@RequestParam Long id, @Valid @ModelAttribute("clienteDto") ClienteDTO clienteDto,
             BindingResult result, Model model) {
+        boolean error = false;
+
         Cliente cliente = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Cliente com id " + id + " não existe."));
+
         if (result.hasErrors()) {
             return "/clientes/update-cliente";
         }
+
+        Optional<Cliente> clienteOptional = repo.findClienteByEmail(clienteDto.getEmail());
+        if (clienteOptional.isPresent()) {
+            if (!clienteOptional.get().equals(cliente)) {
+                model.addAttribute("errorEmail", "Já existe um cliente com esse email!");
+                error = true;
+            }
+        }
+
+        clienteOptional = repo.findClienteByCpf(clienteDto.getCpf());
+        if (clienteOptional.isPresent()) {
+            if (!clienteOptional.get().equals(cliente)) {
+                model.addAttribute("errorCPF", "Já existe um cliente com esse CPF!");
+                error = true;
+            }
+        }
+
+        if (error)
+            return "/clientes/add-cliente";
 
         cliente = new Cliente(clienteDto.getNome(), clienteDto.getDataNasc(), clienteDto.getCpf(),
                 clienteDto.getEmail(), null, null);

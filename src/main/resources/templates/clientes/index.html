@@ -44,9 +44,7 @@
                   <td th:text="${cliente.cpf}"></td>
                   <td th:text="${cliente.email}"></td>
                   <td>
-                    <a th:href="@{/clientes/animais(id=${cliente.id})}"
-                      >Animais</a
-                    >
+                    <a th:href="@{/animais(id=${cliente.id})}">Animais</a>
                   </td>
                   <td>
                     <a th:href="@{/consultas/cliente(idCliente=${cliente.id})}"

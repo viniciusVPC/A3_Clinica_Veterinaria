@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
   </head>
-
+  <!-- (id=${cliente.id}) -->
   <body>
     <div class="container mt-5">
       <div class="row justify-content-center">
@@ -19,7 +19,7 @@
           <h1>Criar Animal:</h1>
           <form
             action="#"
-            th:action="@{/clientes/animais/addanimal(id=${cliente.id})}"
+            th:action="@{/animais/addanimal(id=${cliente.id})}"
             th:object="${animalDto}"
             method="post"
           >
@@ -33,7 +33,7 @@
                 placeholder="Nome"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('nome')}"
                 th:errors="${animalDto.nome}"
               ></span>
@@ -50,7 +50,7 @@
                 id="dataNasc"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('dataNasc')}"
                 th:errors="${animalDto.dataNasc}"
               ></span>
@@ -66,7 +66,7 @@
                 placeholder="Espécie"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('especie')}"
                 th:errors="${animalDto.especie}"
               ></span>
@@ -82,14 +82,26 @@
                 placeholder="Raça"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('raca')}"
                 th:errors="${animalDto.raca}"
               ></span>
             </div>
+
             <br />
+
+            <div th:if="${errorAnimalRepetido}">
+              <div th:text="${errorAnimalRepetido}" class="text-danger"></div>
+            </div>
+
+            <br />
+
             <div class="mb-3">
-              <input type="submit" value="Add Animal" />
+              <input
+                type="submit"
+                class="btn btn-primary"
+                value="Salvar Animal"
+              />
               <a class="btn btn-secondary" href="javascript:history.back()"
                 >Voltar</a
               >

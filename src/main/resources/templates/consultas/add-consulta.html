@@ -24,48 +24,63 @@
             method="post"
           >
             <div class="mb-3">
-              <label for="cpfCliente" class="form-label">CPF do Cliente</label>
+              <label
+                for="cpfCliente"
+                class="${errorCPFCliente != null ? 'text-danger' : 'form-label'}"
+                >CPF do Cliente</label
+              >
               <input
                 type="text"
                 th:field="${consultaDto.cpfCliente}"
                 class="form-control"
+                th:classappend="${errorCPFCliente != null ? 'is-invalid' : ''}"
                 id="cpfCliente"
                 placeholder="CPF do Cliente"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('cpfCliente')}"
                 th:errors="${consultaDto.cpfCliente}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="nomeAnimal" class="form-label">Nome do Pet</label>
+              <label
+                for="nomeAnimal"
+                th:class="${errorNomeAnimal != null ? 'text-danger' : 'form-label'}"
+                >Nome do Pet</label
+              >
               <input
                 type="text"
                 th:field="*{nomeAnimal}"
                 class="form-control"
+                th:classappend="${errorNomeAnimal != null ? 'is-invalid' : ''}"
                 id="nomeAnimal"
                 placeholder="Nome do Animal"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('nomeAnimal')}"
                 th:errors="${consultaDto.nomeAnimal}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="cpfDoutor" class="form-label">CPF do Doutor</label>
+              <label
+                for="cpfDoutor"
+                th:class="${errorCPFDoutor != null ? 'text-danger' : 'form-label'}"
+                >CPF do Doutor</label
+              >
               <input
                 type="text"
                 th:field="${consultaDto.cpfDoutor}"
                 class="form-control"
+                th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
                 id="cpfDoutor"
                 placeholder="CPF do Doutor"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('cpfDoutor')}"
                 th:errors="${consultaDto.cpfDoutor}"
               ></span>
@@ -81,7 +96,7 @@
                 placeholder="Tipo"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('tipo')}"
                 th:errors="${consultaDto.tipo}"
               ></span>
@@ -97,14 +112,16 @@
                 placeholder="Horario"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('horario')}"
                 th:errors="${consultaDto.horario}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="duracaoEmMinutos" class="form-label"
+              <label
+                for="duracaoEmMinutos"
+                th:class="${errorDuracao != null ? 'text-danger' : 'form-label'}"
                 >Duração da consulta (em minutos)</label
               >
               <input
@@ -112,16 +129,37 @@
                 step="1"
                 th:field="*{duracaoEmMinutos}"
                 class="form-control"
+                th:classappend="${errorDuracao != null ? 'is-invalid' : ''}"
                 id="duracaoEmMinutos"
                 placeholder="Duração Em Minutos"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('duracaoEmMinutos')}"
                 th:errors="${consultaDto.duracaoEmMinutos}"
               ></span>
             </div>
+
             <br />
+
+            <div th:if="${errorCPFCliente}">
+              <div th:text="${errorCPFCliente}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorNomeAnimal}">
+              <div th:text="${errorNomeAnimal}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorCPFDoutor}">
+              <div th:text="${errorCPFDoutor}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorDuracao}">
+              <div th:text="${errorDuracao}" class="text-danger"></div>
+            </div>
+
+            <br />
+
             <div class="mb-3">
               <input
                 type="submit"

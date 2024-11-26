@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 import petmania.petmania.dto.AdministradorDTO;
@@ -77,6 +76,7 @@ public class AuthenticationController {
     public String register(@Valid @ModelAttribute("adminDto") AdministradorDTO administradorDto,
             BindingResult result, Model model) {
         boolean error = false;
+
         if (result.hasErrors()) {
             return "/admins/add-admin";
         }
@@ -127,6 +127,7 @@ public class AuthenticationController {
             @Valid @ModelAttribute("administradorDto") AdministradorDTO adminDto, BindingResult result,
             Model model) {
         boolean error = false;
+
         Administrador admin = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Administrador com id " + id + " não existe."));
 

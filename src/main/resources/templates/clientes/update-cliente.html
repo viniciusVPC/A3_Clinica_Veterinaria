@@ -17,6 +17,7 @@
       <div class="row justify-content-center">
         <div class="col-md-4">
           <h1>Editar Cliente:</h1>
+
           <form action="#" th:object="${clienteDto}" method="post">
             <div class="mb-3">
               <label for="nome" class="form-label">Nome</label>
@@ -28,7 +29,7 @@
                 placeholder="Nome"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('nome')}"
                 th:errors="${clienteDto.nome}"
               ></span>
@@ -46,44 +47,66 @@
                 placeholder="Data de Nascimento"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('dataNasc')}"
                 th:errors="${clienteDto.dataNasc}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="cpf" class="form-label">Cpf</label>
+              <label
+                for="cpf"
+                th:class="${errorCPF != null ? 'text-danger' : 'form-label'}"
+                >Cpf</label
+              >
               <input
                 type="text"
                 th:field="${clienteDto.cpf}"
                 class="form-control"
+                th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
                 id="cpf"
                 placeholder="Cpf"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('cpf')}"
                 th:errors="${clienteDto.cpf}"
               ></span>
             </div>
+
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label
+                for="email"
+                th:class="${errorEmail != null ? 'text-danger' : 'form-label'}"
+                >Email</label
+              >
               <input
                 type="text"
                 th:field="${clienteDto.email}"
                 class="form-control"
+                th:classappend="${errorEmail != null ? 'is-invalid' : ''}"
                 id="email"
                 placeholder="Email"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('email')}"
                 th:errors="${clienteDto.email}"
               ></span>
             </div>
 
             <br />
+
+            <div th:if="${errorCPF}">
+              <div th:text="${errorCPF}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorEmail}">
+              <div th:text="${errorEmail}" class="text-danger"></div>
+            </div>
+
+            <br />
+
             <div class="mb-3">
               <input
                 type="submit"

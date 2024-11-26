@@ -1,6 +1,7 @@
 //Cuida da camada API
 package petmania.petmania.controller;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,51 +51,69 @@ public class ConsultaController {
     @PostMapping("/addconsulta")
     public String addConsulta(@Valid @ModelAttribute("consultaDto") ConsultaDTO consultaDto, BindingResult result,
             Model model) {
+        boolean error = false;
+
         // Verifica se o objeto consulta foi criado sem erros
         if (result.hasErrors()) {
             return "/consultas/add-consulta";
         }
 
         // Procura no BD o cliente pelo CPF
-        Cliente cliente = clienteRepo.findClienteByCpf(consultaDto.getCpfCliente())
-                .orElseThrow(() -> new IllegalStateException(
-                        "Cliente com o CPF " + consultaDto.getCpfCliente() + " não existe."));
+        Optional<Cliente> cliente = clienteRepo.findClienteByCpf(consultaDto.getCpfCliente());
+        if (!cliente.isPresent()) {
+            model.addAttribute("errorCPFCliente", "Não existe cliente com esse CPF.");
+            error = true;
+        }
 
-        System.out.println("id cliente: " + cliente.getId());
+        // TODO SE CLIENTE FOR NULO VAI DAR ERRO NA HORA DE PROCURAR ANIMAL
+        System.out.println("id cliente: " + cliente.get().getId());
         // Procura no BD o animal pelo cliente e depois por nome
-        var pets = animalRepo.getAnimalByDono(cliente.getId());
+        var pets = animalRepo.getAnimalByDono(cliente.get().getId());
         Animal animal = null;
         for (Animal pet : pets) {
-            System.out.println("nome pet cliente: " + pet.getNome());
-            System.out.println("nome pet desejado: " + consultaDto.getNomeAnimal());
             if (pet.getNome().equals(consultaDto.getNomeAnimal())) {
                 animal = pet;
             }
         }
-        if (animal == null)
-            throw new IllegalStateException("Esse animal não pertence a esse cliente.");
+        if (animal == null) {
+            model.addAttribute("errorNomeAnimal", "Esse animal não pertence a esse cliente.");
+            error = true;
+        }
 
         // Procura no BD o doutor pelo CPF
-        Doutor doutor = doutorRepo.findDoutorByCpf(consultaDto.getCpfDoutor())
-                .orElseThrow(() -> new IllegalStateException(
-                        "Doutor com o CPF " + consultaDto.getCpfDoutor() + " não existe."));
+        Optional<Doutor> doutor = doutorRepo.findDoutorByCpf(consultaDto.getCpfDoutor());
+        if (!doutor.isPresent()) {
+            model.addAttribute("errorCPFDoutor", "Não existe doutor com esse CPF.");
+            error = true;
+        }
+
+        // TODO verificar disponibilidade do doutor
+
+        if (consultaDto.getDuracaoEmMinutos() <= 5) {
+            model.addAttribute("errorDuracao", "Todas as consultas devem durar mais que 5 minutos.");
+            error = true;
+        }
+
+        if (error)
+            return "/consultas/add-consulta";
 
         // Cria uma consulta nova
-        Consulta consulta = new Consulta(cliente, animal, doutor, consultaDto.getTipo(), consultaDto.getHorario(),
+        Consulta consulta = new Consulta(cliente.get(), animal, doutor.get(), consultaDto.getTipo(),
+                consultaDto.getHorario(),
                 consultaDto.getDuracaoEmMinutos());
 
         // Adiciona consulta no histórico de consultas de todos
-        Set<Consulta> consultas = cliente.getConsultas();
+        Set<Consulta> consultas = cliente.get().getConsultas();
         consultas.add(consulta);
-        cliente.setConsultas(consultas);
+        cliente.get().setConsultas(consultas);
 
         consultas = animal.getConsultas();
         consultas.add(consulta);
         animal.setConsultas(consultas);
 
-        consultas = doutor.getConsultas();
+        consultas = doutor.get().getConsultas();
         consultas.add(consulta);
-        doutor.setConsultas(consultas);
+        doutor.get().setConsultas(consultas);
 
         model.addAttribute("consulta", consultas);
         repo.save(consulta);
@@ -143,6 +162,7 @@ public class ConsultaController {
     @PostMapping("edit")
     public String updateConsulta(@RequestParam Long id, @Valid @ModelAttribute("consultaDto") ConsultaDTO consultaDto,
             BindingResult result, Model model) {
+        boolean error = false;
 
         if (result.hasErrors()) {
             return "consultas/update-consulta";
@@ -151,29 +171,45 @@ public class ConsultaController {
         Consulta consulta = repo.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Consulta com id " + id + " não existe."));
 
-        // Procura no BD o cliente pelo CPF
-        Cliente cliente = clienteRepo.findClienteByCpf(consultaDto.getCpfCliente())
-                .orElseThrow(() -> new IllegalStateException(
-                        "Cliente com o CPF " + consultaDto.getCpfCliente() + " não existe."));
+        Optional<Cliente> cliente = clienteRepo.findClienteByCpf(consultaDto.getCpfCliente());
+        if (!cliente.isPresent()) {
+            model.addAttribute("errorCPFCliente", "Não existe cliente com esse CPF.");
+            error = true;
+        }
+
+        // TODO SE CLIENTE FOR NULO VAI DAR ERRO NA HORA DE PROCURAR ANIMAL
 
         // Procura no BD o animal pelo cliente e depois por nome
-        var pets = animalRepo.getAnimalByDono(cliente.getId());
+        var pets = animalRepo.getAnimalByDono(cliente.get().getId());
         Animal animal = null;
         for (Animal pet : pets) {
-            System.out.println(pet.getNome());
-            if (pet.getNome().equals(consultaDto.getNomeAnimal()))
+            if (pet.getNome().equals(consultaDto.getNomeAnimal())) {
                 animal = pet;
+            }
         }
-        if (animal == null)
-            throw new IllegalStateException("Esse animal não pertence a esse cliente.");
-
+        if (animal == null) {
+            model.addAttribute("errorNomeAnimal", "Esse animal não pertence a esse cliente.");
+            error = true;
+        }
         // Procura no BD o doutor pelo CPF
-        Doutor doutor = doutorRepo.findDoutorByCpf(consultaDto.getCpfDoutor())
-                .orElseThrow(() -> new IllegalStateException(
-                        "Doutor com o CPF " + consultaDto.getCpfDoutor() + " não existe."));
+        Optional<Doutor> doutor = doutorRepo.findDoutorByCpf(consultaDto.getCpfDoutor());
+        if (!doutor.isPresent()) {
+            model.addAttribute("errorCPFDoutor", "Não existe doutor com esse CPF.");
+            error = true;
+        }
+
+        // TODO verificar disponibilidade do doutor
+
+        if (consultaDto.getDuracaoEmMinutos() <= 5) {
+            model.addAttribute("errorDuracao", "Todas as consultas devem durar mais que 5 minutos.");
+            error = true;
+        }
+
+        if (error)
+            return "/consultas/add-consulta";
 
         // Cria uma consulta nova
-        consulta = new Consulta(cliente, animal, doutor, consultaDto.getTipo(), consultaDto.getHorario(),
+        consulta = new Consulta(cliente.get(), animal, doutor.get(), consultaDto.getTipo(), consultaDto.getHorario(),
                 consultaDto.getDuracaoEmMinutos());
         consulta.setIdConsulta(id);
         repo.save(consulta);

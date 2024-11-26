@@ -33,7 +33,7 @@
                 placeholder="Nome"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('nome')}"
                 th:errors="${clienteDto.nome}"
               ></span>
@@ -50,42 +50,62 @@
                 id="dataNasc"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('dataNasc')}"
                 th:errors="${clienteDto.dataNasc}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="cpf" class="form-label">Cpf</label>
+              <label
+                for="cpf"
+                th:class="${errorCPF != null ? 'text-danger' : 'form-label'}"
+                >Cpf</label
+              >
               <input
                 type="text"
                 th:field="*{cpf}"
                 class="form-control"
+                th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
                 id="cpf"
                 placeholder="Cpf"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('cpf')}"
                 th:errors="${clienteDto.cpf}"
               ></span>
             </div>
 
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label
+                for="email"
+                th:class="${errorEmail != null ? 'text-danger' : 'form-label'}"
+                >Email</label
+              >
               <input
                 type="text"
                 th:field="*{email}"
                 class="form-control"
+                th:classappend="${errorEmail != null ? 'is-invalid' : ''}"
                 id="email"
                 placeholder="Email"
               />
               <span
-                class="invalid-feedback"
+                class="text-danger"
                 th:if="${#fields.hasErrors('email')}"
                 th:errors="${clienteDto.email}"
               ></span>
+            </div>
+
+            <br />
+
+            <div th:if="${errorCPF}">
+              <div th:text="${errorCPF}" class="text-danger"></div>
+            </div>
+
+            <div th:if="${errorEmail}">
+              <div th:text="${errorEmail}" class="text-danger"></div>
             </div>
 
             <br />
@@ -102,7 +122,6 @@
         </div>
       </div>
     </div>
-
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
