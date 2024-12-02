@@ -10,6 +10,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/estilo_login.css"/>
   </head>
 
   <body>
@@ -41,19 +42,30 @@
       <input type="submit" value="Login" />
     </form> -->
 
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
+    <p th:if="${loginError}" class="error">Nome de usuário ou senha incorretos</p>
+
     <form
       th:action="@{/auth/login}"
       th:object="${authenticationDto}"
       method="post"
     >
-      <label for="username">Username</label>:
-      <input type="text" id="username" name="username" autofocus="autofocus" />
-      <br />
-      <label for="password">Password</label>:
-      <input type="password" id="password" name="password" /> <br />
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Usuario</label>
+      <input type="email" class="form-control" id="exampleInputusuario" aria-describedby="usuarioHelp">
+      <div id="emailHelp" class="form-text"></div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Senha</label>
+      <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Lembrar-se</label>
+    </div>
+    <button type="submit" class="btn btn-success">Entrar</button>
 
-      <input type="submit" value="Log in" />
+      <p>Não é cadastrado? </p>
+      <a class="btn btn-success" href="/auth/register" >Cadastrar</a >
     </form>
 
     <p>

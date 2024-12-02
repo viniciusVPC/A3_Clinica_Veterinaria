@@ -1,0 +1,19 @@
+ 
+*{
+  box-sizing: border-box;
+}
+body{
+    width:100%;
+    height:100%;
+}
+
+form{
+    width:300px;
+    margin:200px auto;
+    text-align:left;
+}
+
+.btn{
+    display:block;
+    margin: 10px auto;
+}
