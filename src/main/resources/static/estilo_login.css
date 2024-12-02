@@ -10,10 +10,32 @@ body{
 form{
     width:300px;
     margin:200px auto;
-    text-align:left;
+    text-align:center;
+    font-family:'Courier New', Courier, monospace;
+    text-shadow: 2px;
 }
 
 .btn{
     display:block;
-    margin: 10px auto;
+    margin:10px auto;
+    height:35px;
+    width:120px;
+}
+
+p{
+    text-align: center;
+    text-decoration: solid;
+    text-shadow: 2px;
+}
+
+fieldset{
+    align-items: center;
+    display:block;
+    margin-left:2px;
+    margin-right:2px;
+    padding-top:0.35em;
+    padding-bottom:0.35em;
+    padding-left:0.75em;
+    padding-right:0.75em;
+    border: 2px groove;
 }
