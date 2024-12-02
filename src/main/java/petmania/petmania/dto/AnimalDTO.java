@@ -6,10 +6,10 @@ import java.time.Period;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class AnimalDTO {
         return Period.between(this.dataNasc, LocalDate.now()).getYears();
     }
 
-    public AnimalDTO(Long idDono){
+    public AnimalDTO(Long idDono) {
         this.idDono = idDono;
     }
 }

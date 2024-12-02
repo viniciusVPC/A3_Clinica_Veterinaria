@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +40,7 @@ public class ClienteDTO {
     private LocalDate dataNasc;
 
     @NotBlank(message = "Cpf é obrigatório.")
+    @CPF(message = "Cpf inválido.")
     private String cpf;
 
     @NotBlank(message = "Email é obrigatório.")

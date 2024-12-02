@@ -2,6 +2,7 @@ package petmania.petmania.dto;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Email;
@@ -27,6 +28,7 @@ public class DoutorDTO {
     private LocalDate dataNasc;
 
     @NotBlank(message = "Cpf é obrigatório.")
+    @CPF(message = "Cpf inválido.")
     private String cpf;
 
     @NotBlank(message = "Email é obrigatório.")

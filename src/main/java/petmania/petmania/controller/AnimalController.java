@@ -40,47 +40,39 @@ public class AnimalController {
         return "/animais/add-animal";
     }
 
-    
     // @RequestParam Long id,
     @PostMapping("/addanimal")
     public String addAnimal(@Valid @ModelAttribute("animalDto") AnimalDTO animalDto,
             BindingResult result, Model model) {
         boolean error = false;
         if (result.hasErrors()) {
-
-            //model.addAttribute("idDono", id);
-            model.addAttribute("animalDto", animalDto);
             return "/animais/add-animal";
 
         }
-        /* Cliente dono = donoRepo.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Dono com id " + id +
-                        " não existe.")); */
-
         Long id = animalDto.getIdDono();
+        Cliente dono = donoRepo.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Dono com id " + id +
+                        " não existe."));
 
-        /* for (Animal pet : dono.getPets()) {
+        for (Animal pet : dono.getPets()) {
             if (pet.getNome().equals(animalDto.getNome()) && pet.getIdade() == animalDto.getIdade()) {
                 model.addAttribute("errorAnimalRepetido",
                         "Esse cliente parece já ter esse animal.");
                 error = true;
             }
-        } */
+        }
 
         if (error) {
-            //model.addAttribute("idDono", id);
-            model.addAttribute("animalDto", animalDto);
             return String.format("animais/add-animal?id=%d", 1);
         }
 
         Animal animal = new Animal(animalDto.getNome(), animalDto.getDataNasc(),
                 animalDto.getEspecie(), animalDto.getRaca());
 
-        /* Set<Animal> pets = dono.getPets();
+        Set<Animal> pets = dono.getPets();
         pets.add(animal);
-        dono.setPets(pets); */
+        dono.setPets(pets);
 
-        //model.addAttribute("cliente", dono);
         repo.save(animal);
         return String.format("redirect:/animais?id=%d", id);
     }

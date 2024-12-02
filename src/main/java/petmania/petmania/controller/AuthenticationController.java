@@ -69,11 +69,18 @@ public class AuthenticationController {
     public String mostraFormularioSignin(Model model) {
         AdministradorDTO adminDTO = new AdministradorDTO();
         model.addAttribute("adminDto", adminDTO);
+        return "/admins/register";
+    }
+
+    @GetMapping("/addadmin")
+    public String mostraFormularioAddAdmin(Model model) {
+        AdministradorDTO adminDTO = new AdministradorDTO();
+        model.addAttribute("adminDto", adminDTO);
         return "/admins/add-admin";
     }
 
-    @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("adminDto") AdministradorDTO administradorDto,
+    @PostMapping("/addadmin")
+    public String addAdmin(@Valid @ModelAttribute("adminDto") AdministradorDTO administradorDto,
             BindingResult result, Model model) {
         boolean error = false;
 
@@ -109,6 +116,45 @@ public class AuthenticationController {
         repo.save(admin);
 
         return "redirect:/admins";
+    }
+
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("adminDto") AdministradorDTO administradorDto,
+            BindingResult result, Model model) {
+        boolean error = false;
+
+        if (result.hasErrors()) {
+            return "/admins/register";
+        }
+
+        if (!administradorDto.getDataNasc().isBefore(LocalDate.now().minusYears(18))) {
+            model.addAttribute("errorIdade", "Administradores precisam ser maiores de idade!");
+            error = true;
+        }
+
+        Optional<Administrador> adminOptional = repo.findAdminByEmail(administradorDto.getEmail());
+        if (adminOptional.isPresent()) {
+            model.addAttribute("errorEmail", "Já existe um administrador com esse email!");
+            error = true;
+        }
+
+        adminOptional = repo.findAdminByCpf(administradorDto.getCpf());
+        if (adminOptional.isPresent()) {
+            model.addAttribute("errorCPF", "Já existe um administrador com esse CPF!");
+            error = true;
+        }
+
+        if (error)
+            return "/admins/register";
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(administradorDto.getSenha());
+        Administrador admin = new Administrador(administradorDto.getNome(), administradorDto.getDataNasc(),
+                administradorDto.getCpf(), administradorDto.getEmail(), encryptedPassword,
+                UserRole.ADMIN);
+
+        repo.save(admin);
+
+        return "redirect:/home";
     }
 
     @GetMapping("/edit")
