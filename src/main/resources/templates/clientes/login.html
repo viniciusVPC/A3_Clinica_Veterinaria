@@ -14,19 +14,22 @@
 </head>
 <body>
 
-    <form method="post">
-      <label for="username">Usuário</label>:
-      <input type="text" id="username" name="username" autofocus="autofocus" />
-      <br/>
-      <label for="password">Senha:</label>:
-      <input type="password" id="password" name="password" /> <br />
-      <input type="submit" value="Log in" />
-    </form>
-
-    <p>
-      <a class="btn btn-success" href="#"
-        >Não é cadastrado? Crie um usuário aqui!</a>
-    </p>
+    <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-success">Entrar</button>
+      </form>
 
 
     <script
