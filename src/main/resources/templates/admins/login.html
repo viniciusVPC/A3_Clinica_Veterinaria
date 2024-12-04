@@ -40,39 +40,41 @@
       ></span>
 
       <input type="submit" value="Login" />
+      <p th:if="${loginError}" class="error">Nome de usuário ou senha incorretos</p>
+
     </form> -->
 
-    <p th:if="${loginError}" class="error">Nome de usuário ou senha incorretos</p>
-
+    <h1 style="text-align:center;display: flexbox;">Pet Mania</h1>
+    <h2 style="text-align:center; display: flexbox;">Administradores</h2>
+    
     <form
+    
       th:action="@{/auth/login}"
       th:object="${authenticationDto}"
       method="post"
     >
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Usuario</label>
-      <input type="email" class="form-control" id="exampleInputusuario" aria-describedby="usuarioHelp">
-      <div id="emailHelp" class="form-text"></div>
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Senha</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
-    </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Lembrar-se</label>
-    </div>
-    <button type="submit" class="btn btn-success">Entrar</button>
+    <fieldset>
+      <legend style="font-family: 'Courier New', Courier, monospace;">Login</legend>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Usuario</label>
+            <input type="email" class="form-control" id="exampleInputusuario" aria-describedby="usuarioHelp">
+            <div id="emailHelp" class="form-text"></div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Lembrar-se</label>
+          </div>
+          <button type="submit" class="btn btn-success">Entrar</button>
 
-      <p>Não é cadastrado? </p>
-      <a class="btn btn-success" href="/auth/register" >Cadastrar</a >
+            <p>Não é cadastrado? </p>
+            <a class="btn btn-success" href="/src/main/resources/templates/admins/add-admin.html" >Cadastrar</a >
+      </fieldset>
     </form>
 
-    <p>
-      <a class="btn btn-primary" href="/auth/register"
-        >Não é cadastrado? Crie um usuário aqui!</a
-      >
-    </p>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
