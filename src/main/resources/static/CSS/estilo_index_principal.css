@@ -1,54 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 *{
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body{
     background-image: url(/src/main/resources/static/Assets/Imagem_de_fundo.jpg);
-    background-size: cover;
+    background-color:#93C572;
+    background-size:cover;
 }
 
-.mb-3{
-    display:flex;
-    align-items: center;
-    text-align: center;
-    margin: 10px 10px 10px;
+.nav-itens{
+    display: flex;
     
 }
 
-.mb-3 .mb-3-align-items-center {
-    align-items: center;
-    text-align: center;
-}
-.mb-3 a{
-    padding-left: 20px;
-    margin: 10px 10px 10px;
-    font-family: 'Poppins','sans-serif';
 
-}
-
-.navbar{
+.navbar_inicio{
     display: flex;
-    width:100% ;
     justify-content: space-around;
-    margin-top: 20px;
+    background-color: #698a50;
+    font-family:'Poppins', 'sans-serif';
+    margin-top: 30px;
     align-items: center;
-    color: #202020;
-    background-color: #508a5c;
-    font-family: 'Poppins','sans-serif';
+    padding: 10px;
+    
 }
-
 .logo{
-    font-weight: 800px;
-    font-size: 25px;
+    font-weight: 600;
+    font-size: 30px;
 }
 
-.main-home p{
+.main-index p{
     font-size: 80px;
     font-weight: 800px;
     margin:150px 150px; 
     align-items: center;
 }
+

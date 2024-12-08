@@ -11,18 +11,28 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="/src/main/resources/static/CSS/estiloindex.css">
+    <link rel="stylesheet" href="/src/main/resources/static/CSS/estilo_index_principal.css">
 
   </head>
 
   <body>
     <div class="container my-5">
-      <div class="row justify-content-center">
-        <div class="col-md-auto">
-          <h1 class="text-center-mb-3">Bem-vindo a PetMania</h1>
-          <a href="/src/main/resources/templates/home.html" class="btn btn-success center">Entrar</a>
+
+      <nav class="navbar_inicio">
+        <div><h1 class="logo">PetMania Gerenciador</h1></div>
+        <div class="links">
+          <div class="mb-3">
+            <a href="/src/main/resources/templates/home.html" class="btn btn-warning">Home</a>
+            <a href="#" class="btn btn-warning">Serviços</a>
+            <a href="#" class="btn btn-warning">Sobre nós</a>
+            <a href="#" class="btn btn-warning">Contato</a>
         </div>
-      </div>
+        </div>
+        
+      </nav>
+      <main class="main-index">
+        <p>A saúde do seu Pet é a nossa prioridade</p>
+    </main>
     </div>
 
     <script

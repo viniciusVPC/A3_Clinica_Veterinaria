@@ -71,7 +71,7 @@ body{
 .remember-forgot a {
     text-decoration: none;
     color:black;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .remember-forgot a:hover {
@@ -83,4 +83,27 @@ body{
     margin: -40px;
     align-items: center;
     text-align: center;
+}
+
+.navbar{
+    display:flex;
+    width:30%;
+    padding-top: 0px;
+    margin-top: -600px;
+    margin-left: -500px;
+    justify-content: space-around;
+    align-items: center;
+    color: #202020;
+    background-color:#698a50;
+}
+
+.logo{
+    margin-top: 30px;
+    font-weight: 800px;
+    font-size: 50px;
+}
+
+.navbar a{
+    display: flex;
+    margin-top: 40px;
 }
