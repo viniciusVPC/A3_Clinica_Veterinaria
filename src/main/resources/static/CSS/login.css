@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    background-image:url(/src/main/resources/static/Assets/Imagem\ de\ fundo.jpg);
+    background-size:1400px;
+    min-width: 100vh;
+}
+
+.container-mt-5{
+    margin-top:100px;
+    margin-bottom: 100px;
+    display:flexbox;
+    width: 550px;
+    height:500px;
+    background-color:#72c584;
+    border:2px solid black;
+    border-radius: 10px;
+}
+
+.col-md-4 {
+    position: relative;
+    font-size:medium 20px;
+    text-align:center;
+    width:300px;
+}
+
+.col-md-4  h1{
+    position:static;
+    font-size:small 20px;
+    text-align:center;
+    color:black;
+    margin: 10px;
+}
+
+.col-md-4 .mb-3 .form-control {
+    display: inline;
+    border: 2px solid black;
+    width: 100;
+    font-size: 16px;
+    color:black;
+
+}
+
+.mb-3 i{
+    position: absolute;
+    right: 20px;
+    transform: translateY(220%);
+    font-size:20px;
+}
+
+.remember-forgot{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.remember-forgot label input{
+    accent-color: white;
+    margin-right: 5px;
+}
+
+.remember-forgot a {
+    text-decoration: none;
+    color:black;
+    margin-left: 20px;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.mb-4{
+    display: flexbox;
+    margin: -40px;
+    align-items: center;
+    text-align: center;
+}

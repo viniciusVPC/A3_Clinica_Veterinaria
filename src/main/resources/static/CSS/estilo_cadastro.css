@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+body{
+    background-color: #96c572;
+    background-image: url(/src/main/resources/static/Assets/Icone_PET.png);
+    background-repeat:no-repeat;
+    background-size:500px;
+    
+}
+
+.col-md-4 {
+    width:100vh;
+}
+
+.col-md-4 h1{
+    width:100%;
+    font-size:30px;
+    text-align: center;
+    margin: 10px 20px 10px;
+    width:100%;
+}
+
+form{
+    border: 2px solid;
+    padding:50px;
+    border-radius: 10px ;
+    background-color:#ffedeb;
+    width:100vh;
+    
+}
+.mb-3{
+    text-align: left;
+    font-size: large;
+    color: black;
+}
+
+.mb-3 input{
+    border: 2px solid black ;
+    outline:none;
+}

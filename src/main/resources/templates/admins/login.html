@@ -10,64 +10,82 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/src/main/resources/static/CSS/login.css">
   </head>
 
   <body>
-    <div class="container mt-5">
+    <div class="container-mt-5">
       <div class="row justify-content-center">
         <div class="col-md-4">
-          <h1>Login:</h1>
-          <form
+          <h1>Bem-vindo!</h1>
+          <form class="forms"
             action="#"
             th:action="@{/auth/login}"
             th:object="${authenticationDto}"
             method="post"
-          >
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>:
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                name="username"
-                autofocus="autofocus"
-              />
-              <span
-                class="text-danger"
-                th:if="${#fields.hasErrors('login')}"
-                th:errors="${authenticationDto.login}"
-              ></span>
-            </div>
+           >
+            
+                <div class="mb-3">
+                  <label for="username" class="form-label">Usuario</label>
+                  <i class="bx bxs-user"></i>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    autofocus="autofocus"
+                  />
+                  
+                  <span
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('login')}"
+                    th:errors="${authenticationDto.login}"
+                  ></span>
+                </div>
 
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>:
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-              />
-              <span
-                class="text-danger"
-                th:if="${#fields.hasErrors('password')}"
-                th:errors="${authenticationDto.password}"
-              ></span>
-            </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Senha</label>
+                  <i class="bx bxs-lock-alt"></i>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                  />
 
-            <br />
+                  
+                  <span
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('password')}"
+                    th:errors="${authenticationDto.password}"
+                  ></span>
+                </div>
+                <div class="remember-forgot">
+                  <label>
+                    <input type="checkbox">
+                    Lembrar senha
+                    <br>
+                    <a href="#">Esqueci minha senha</a>
+                  </label>
+                </div>
 
-            <p th:if="${loginError}" class="text-danger">
-              Usuário ou senha inválidos
-            </p>
+                <br />
 
-            <br />
+                <p th:if="${loginError}" class="text-danger">
+                  Usuário ou senha inválidos
+                </p>
 
-            <div class="mb-3">
-              <input type="submit" class="btn btn-primary" value="Log in" />
-              <a class="btn btn-secondary" href="/auth/register"
-                >Criar admin (debug)</a
-              >
-            </div>
+                <br />
+
+                <div class="mb-4">
+                  <input type="submit" class="btn btn-dark" value="Entrar" /> <br><br>
+                  <p>Ainda não possui cadastro?</p>
+                  <a class="btn btn-light" href="/src/main/resources/templates/admins/register.html"
+                  >Registre-se</a
+                  >
+                </div>
+            </fieldset>
           </form>
         </div>
       </div>

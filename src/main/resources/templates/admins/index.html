@@ -10,10 +10,13 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-  </head>
+
+    <link rel="stylesheet" href="/src/main/resources/static/CSS/estilo_index_admin.css">
+  </head>  
 
   <body>
-    <div class="container my-5" th:switch="${admins}">
+
+    <div class="container-my-5" th:switch="${admins}">
       <div class="row justify-content-center">
         <div class="col-md-auto">
           <div th:if="${admins == null}">
@@ -23,7 +26,7 @@
           </div>
 
           <div th:if="${admins}">
-            <h2 class="text-center mb-3">Administradores:</h2>
+            <h2 class="text-center-mb-3">Administradores:</h2>
             <table class="table">
               <thead>
                 <tr>
@@ -57,10 +60,10 @@
           <br />
 
           <div class="mb-3">
-            <a class="btn btn-primary" href="/auth/addadmin"
+            <a class="btn btn-dark" href="/src/main/resources/templates/admins/register.html"
               >Cadastrar novo Administrador</a
             >
-            <a class="btn btn-secondary" href="/home">Menu</a>
+            <a class="btn btn-secondary" href="/src/main/resources/templates/home.html">Menu</a>
           </div>
         </div>
       </div>

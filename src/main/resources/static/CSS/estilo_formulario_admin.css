@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Roboto Mono", sans-serif;
+}
+
+body{
+    background-image: url(/src/main/resources/static/Assets/fundo_admin.jpg);
+    background-size:cover;
+    background-repeat: no-repeat;
+    width:100vh;
+}
+
+
+.col-md-4 h1{
+    background-color: #96c572;
+    border: 2px solid black ;
+    border-radius: 10px;
+    width:100%;
+    font-size:30px;
+    text-align: center;
+    margin: 10px 0 10px;
+    width:150vh;
+}
+
+form{
+    border: 2px solid;
+    padding:50px;
+    border-radius: 10px ;
+    background-color:#96c572;
+    width:150vh;
+    
+}
+.mb-3{
+    text-align: left;
+    font-size: large;
+}
+
+.mb-3 input{
+    border: 2px solid black ;
+    outline:none;
+}
+
