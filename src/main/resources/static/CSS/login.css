@@ -11,9 +11,8 @@ body{
     display:flex;
     justify-content:center;
     align-items: center;
-    background-image:url(/src/main/resources/static/Assets/Imagem\ de\ fundo.jpg);
-    background-size:1400px;
-    min-width: 100vh;
+    background-image:url(/src/main/resources/static/Assets/Imagem_de_fundo.jpg);
+    background-size:cover;
 }
 
 .container-mt-5{
