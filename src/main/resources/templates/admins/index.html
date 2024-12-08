@@ -11,11 +11,13 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="/src/main/resources/static/CSS/estilo_index_admin.css">
-  </head>  
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/CSS/estilo_index_admin.css"
+    />
+  </head>
 
   <body>
-
     <div class="container-my-5" th:switch="${admins}">
       <div class="row justify-content-center">
         <div class="col-md-auto">
@@ -60,10 +62,10 @@
           <br />
 
           <div class="mb-3">
-            <a class="btn btn-dark" href="/src/main/resources/templates/admins/register.html"
+            <a class="btn btn-dark" href="/auth/addadmin"
               >Cadastrar novo Administrador</a
             >
-            <a class="btn btn-secondary" href="/src/main/resources/templates/home.html">Menu</a>
+            <a class="btn btn-secondary" href="/home">Menu</a>
           </div>
         </div>
       </div>

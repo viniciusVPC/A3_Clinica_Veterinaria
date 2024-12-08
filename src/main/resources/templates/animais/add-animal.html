@@ -11,16 +11,18 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="/src/main/resources/static/CSS/estilo_cadastro.css">
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/CSS/estilo_cadastro.css"
+    />
   </head>
 
- <!--  <p th:text=""></p> -->
   <body>
     <div class="container mt-5">
       <div class="row justify-content-center">
         <div class="col-md-4">
           <h1>Criar Animal:</h1>
-          
+
           <form
             action="#"
             th:action="@{/animais/addanimal}"
@@ -95,10 +97,9 @@
             <div class="mb-3" style="display: none !important">
               <label for="idDono">Id Dono</label>
               <input
-              type="number"
-              step="1"
+                type="number"
+                step="1"
                 th:field="${animalDto.idDono}"
-                
                 id="idDono"
               />
             </div>
@@ -112,11 +113,7 @@
             <br />
 
             <div class="mb-3">
-              <input
-                type="submit"
-                class="btn btn-dark"
-                value="Salvar Animal"
-              />
+              <input type="submit" class="btn btn-dark" value="Salvar Animal" />
               <a class="btn btn-secondary" href="javascript:history.back()"
                 >Voltar</a
               >

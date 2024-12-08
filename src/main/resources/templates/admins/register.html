@@ -11,10 +11,14 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" type="text/css" href="/src/main/resources/static/CSS/estilo_formulario_admin.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/src/main/resources/static/CSS/estilo_formulario_admin.css"
+    />
   </head>
 
-  <body>
+  <body class="teste">
     <div class="container-mt-5">
       <div class="row justify-content-center">
         <div class="col-md-4">
@@ -25,129 +29,127 @@
             th:object="${adminDto}"
             method="post"
           >
-         
-              <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input
-                  type="text"
-                  th:field="*{nome}"
-                  class="form-control"
-                  id="nome"
-                  placeholder="Nome completo"
-                />
-                <span
-                  class="text-danger"
-                  th:if="${#fields.hasErrors('nome')}"
-                  th:errors="${adminDto.nome}"
-                ></span>
-              </div>
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome</label>
+              <input
+                type="text"
+                th:field="*{nome}"
+                class="form-control"
+                id="nome"
+                placeholder="Nome completo"
+              />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('nome')}"
+                th:errors="${adminDto.nome}"
+              ></span>
+            </div>
 
-              <div class="mb-3">
-                <label
-                  for="dataNasc"
-                  th:class="${errorIdade != null ? 'text-danger' : 'form-label'}"
-                  >Data de Nascimento</label
-                >
-                <input
-                  type="date"
-                  th:field="*{dataNasc}"
-                  class="form-control"
-                  th:classappend="${errorIdade != null ? 'is-invalid' : ''}"
-                  id="dataNasc"
-                />
-                <span
-                  class="text-danger"
-                  th:if="${#fields.hasErrors('dataNasc')}"
-                  th:errors="${adminDto.dataNasc}"
-                ></span>
-              </div>
+            <div class="mb-3">
+              <label
+                for="dataNasc"
+                th:class="${errorIdade != null ? 'text-danger' : 'form-label'}"
+                >Data de Nascimento</label
+              >
+              <input
+                type="date"
+                th:field="*{dataNasc}"
+                class="form-control"
+                th:classappend="${errorIdade != null ? 'is-invalid' : ''}"
+                id="dataNasc"
+              />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('dataNasc')}"
+                th:errors="${adminDto.dataNasc}"
+              ></span>
+            </div>
 
-              <div class="mb-3">
-                <label
-                  for="cpf"
-                  th:class="${errorCPF != null ? 'text-danger' : 'form-label'}"
-                  >Cpf</label
-                >
-                <input
-                  type="text"
-                  th:field="*{cpf}"
-                  class="form-control"
-                  th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
-                  id="cpf"
-                  placeholder="Digite o CPF com números e sem espaço..."
-                />
-                <span
-                  class="text-danger"
-                  th:if="${#fields.hasErrors('cpf')}"
-                  th:errors="${adminDto.cpf}"
-                ></span>
-              </div>
+            <div class="mb-3">
+              <label
+                for="cpf"
+                th:class="${errorCPF != null ? 'text-danger' : 'form-label'}"
+                >Cpf</label
+              >
+              <input
+                type="text"
+                th:field="*{cpf}"
+                class="form-control"
+                th:classappend="${errorCPF != null ? 'is-invalid' : ''}"
+                id="cpf"
+                placeholder="Digite o CPF com números e sem espaço..."
+              />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('cpf')}"
+                th:errors="${adminDto.cpf}"
+              ></span>
+            </div>
 
-              <div class="mb-3">
-                <label
-                  for="email"
-                  th:class="${errorEmail != null ? 'text-danger' : 'form-label'}"
-                  >Email</label
-                >
-                <input
-                  type="text"
-                  th:field="*{email}"
-                  class="form-control"
-                  th:classappend="${errorEmail != null ? 'is-invalid' : ''}"
-                  id="email"
-                  placeholder="Email de administrador"
-                />
-                <span
-                  class="text-danger"
-                  th:if="${#fields.hasErrors('email')}"
-                  th:errors="${adminDto.email}"
-                ></span>
-              </div>
+            <div class="mb-3">
+              <label
+                for="email"
+                th:class="${errorEmail != null ? 'text-danger' : 'form-label'}"
+                >Email</label
+              >
+              <input
+                type="text"
+                th:field="*{email}"
+                class="form-control"
+                th:classappend="${errorEmail != null ? 'is-invalid' : ''}"
+                id="email"
+                placeholder="Email de administrador"
+              />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="${adminDto.email}"
+              ></span>
+            </div>
 
-              <div class="mb-3">
-                <label for="senha" class="form-label">Senha</label>
-                <input
-                  type="password"
-                  th:field="*{senha}"
-                  class="form-control"
-                  id="senha"
-                  placeholder="Senha com no mínimo 8 caracteres..."
-                />
-                <span
-                  class="text-danger"
-                  th:if="${#fields.hasErrors('senha')}"
-                  th:errors="${adminDto.senha}"
-                ></span>
-              </div>
+            <div class="mb-3">
+              <label for="senha" class="form-label">Senha</label>
+              <input
+                type="password"
+                th:field="*{senha}"
+                class="form-control"
+                id="senha"
+                placeholder="Senha com no mínimo 8 caracteres..."
+              />
+              <span
+                class="text-danger"
+                th:if="${#fields.hasErrors('senha')}"
+                th:errors="${adminDto.senha}"
+              ></span>
+            </div>
 
-              <br />
+            <br />
 
-              <div th:if="${errorIdade}">
-                <div th:text="${errorIdade}" class="text-danger"></div>
-              </div>
+            <div th:if="${errorIdade}">
+              <div th:text="${errorIdade}" class="text-danger"></div>
+            </div>
 
-              <div th:if="${errorCPF}">
-                <div th:text="${errorCPF}" class="text-danger"></div>
-              </div>
+            <div th:if="${errorCPF}">
+              <div th:text="${errorCPF}" class="text-danger"></div>
+            </div>
 
-              <div th:if="${errorEmail}">
-                <div th:text="${errorEmail}" class="text-danger"></div>
-              </div>
+            <div th:if="${errorEmail}">
+              <div th:text="${errorEmail}" class="text-danger"></div>
+            </div>
 
-              <br />
+            <br />
 
-              <div class="mb-3">
-                <input
-                  type="submit"
-                  class="btn btn-dark"
-                  value="Salvar Novo Admin"
-                />
-                <a class="btn btn-dark" href="javascript:history.back()"
-                  >Voltar</a
-                >
-              </div>
+            <div class="mb-3">
+              <input
+                type="submit"
+                class="btn btn-dark"
+                value="Salvar Novo Admin"
+              />
+              <a class="btn btn-dark" href="javascript:history.back()"
+                >Voltar</a
+              >
+            </div>
           </form>
-          
         </div>
       </div>
     </div>
